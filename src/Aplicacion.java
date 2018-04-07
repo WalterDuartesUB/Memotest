@@ -10,6 +10,7 @@ import ar.edu.ub.testing.memotest.consola.MemotestConsola;
  * - No es necesario que tenga interfaz gráfica; en caso de ser por consola, utilizar como "imágenes" los números del 0 al 9 y las letras de la "a" a la "z".
  * - La usabilidad del programa corre por cuenta del desarrollador.
  * @author Walter Duartes
+ * @date 2018/04/06
  */
 
 public class Aplicacion 
