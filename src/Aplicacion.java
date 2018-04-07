@@ -11,6 +11,7 @@ import ar.edu.ub.testing.memotest.consola.MemotestConsola;
  * - La usabilidad del programa corre por cuenta del desarrollador.
  * @author Walter Duartes
  * @date 2018/04/06
+ * 
  */
 
 public class Aplicacion 
