@@ -6,12 +6,24 @@ public class ArrayUtils
 {
 
 	/**
-	 * Mezcla una lista de Object
+	 * Mezcla una lista de Object   
+	 * 
 	 * @param array lista de Object a mezclar
 	 * @return una nueva lista de Object mezclada
+	 * @return null si el array original es null
+	 * 
+	 * Historial
+	 * ---------
+	 * 
+	 * 2018/04/07	wduartes	Si el array es null, retorna null
+	 * 
 	 */
 	public static Object[] mezclar(Object[] array) 
 	{
+		
+		//Si viene null, retorno null
+		if( array == null )
+			return null;
 		
 		Random   rand = new Random();
 		Object[] arrayMezclado = array.clone();
