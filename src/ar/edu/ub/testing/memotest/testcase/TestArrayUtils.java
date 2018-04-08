@@ -14,7 +14,7 @@ public class TestArrayUtils extends TestCase
 	
 	public void testMezclarNull()
 	{
-		assertEquals( ArrayUtils.mezclar( null ), null );
+		assertEquals( null, ArrayUtils.mezclar( null ) );
 	}
 	
 	public void testMezclarArrayNulls()
@@ -26,7 +26,7 @@ public class TestArrayUtils extends TestCase
 	public void testMezclarArrayNullsTamanio()
 	{
 		String[] array = new String[] { null, null, null };
-		assertEquals( ArrayUtils.mezclar( array ).length, array.length );
+		assertEquals( array.length, ArrayUtils.mezclar( array ).length );
 	}
 	
 	///////////////////////////////////////////////////////////////////////////
@@ -83,7 +83,62 @@ public class TestArrayUtils extends TestCase
 		//Busco que todos los valores existan en el array mezclado
 		for( int posicion = 0; posicion < arrayMezclado.length; posicion++ )
 		{
-			assertEquals( arrayMezclado[posicion], mapaValores.get( arrayMezclado[posicion]) );
+			assertEquals( mapaValores.get( arrayMezclado[posicion]) , arrayMezclado[posicion]);
 		}
 	}
+	
+	///////////////////////////////////////////////////////////////////////////
+	//Pruebas de array con valores repetidos
+	
+	public void testMezclarArrayConValoresRepetidos()
+	{
+		String[] array = new String[] { "a", "b", "c", "a" };
+		assertNotNull( ArrayUtils.mezclar( array ) );
+	}
+		
+	public void testMezclarArrayConValoresRepetidosCopia()
+	{		
+		String[] array = new String[] { "a", "b", "c", "a" };
+		
+		assertNotSame( array, ArrayUtils.mezclar( array ) );
+	}
+	
+	public void testMezclarArrayTamanioConValoresRepetidos()
+	{
+		String[] array = new String[] { "a", "b", "c", "a" };
+		assertEquals( ArrayUtils.mezclar( array ).length, array.length );
+	}
+	
+	public void testMezclarArrayVerificarExistenciaTodosLosValoresRepetidos()
+	{		
+		String[] array = new String[] { "a", "b", "c", "a" };
+		String[] arrayMezclado = ( String[] ) ArrayUtils.mezclar( array );
+		
+		//Creo un mapa para tener simplificada la busqueda de los elementos
+		Map<String, Integer> mapaValores = new HashMap<String,Integer>();
+		
+		for( int posicion = 0; posicion < array.length; posicion++)
+		{
+			if( mapaValores.get( array[posicion] ) == null )
+				mapaValores.put( array[ posicion ], new Integer( 0 ) );
+			
+			mapaValores.put( array[ posicion ], mapaValores.get( array[posicion] ) + 1);
+		}
+		
+		//Busco que todos los valores existan en el array mezclado
+		for( int posicion = 0; posicion < arrayMezclado.length; posicion++ )
+		{
+			//Tiene que existir en el original
+			assertNotNull( mapaValores.get( arrayMezclado[posicion] ) );
+			
+			//Tienen que quedar encuentros
+			assertTrue( mapaValores.get( arrayMezclado[posicion] ) > 0 );
+			
+			//Quito una cuenta de encuentros
+			mapaValores.put(  arrayMezclado[posicion], mapaValores.get(  arrayMezclado[posicion] ) - 1);
+			
+			//Tienen que quedar encuentros
+			assertTrue( mapaValores.get( arrayMezclado[posicion] ) >= 0 );			
+		}
+	}	
 }
