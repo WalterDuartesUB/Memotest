@@ -1,9 +1,13 @@
 package ar.edu.ub.testing.memotest.modelo.interno.testcase;
 
+import ar.edu.ub.testing.memotest.modelo.Carta;
 import ar.edu.ub.testing.memotest.modelo.interno.MemotestTablero;
 import ar.edu.ub.testing.memotest.modelo.interno.exception.MemotestTableroCantidadColumnasInvalidaException;
 import ar.edu.ub.testing.memotest.modelo.interno.exception.MemotestTableroCantidadFilasInvalidaException;
 import ar.edu.ub.testing.memotest.modelo.interno.exception.MemotestTableroCartaNullException;
+import ar.edu.ub.testing.memotest.modelo.interno.exception.MemotestTableroColumnaNoExisteException;
+import ar.edu.ub.testing.memotest.modelo.interno.exception.MemotestTableroException;
+import ar.edu.ub.testing.memotest.modelo.interno.exception.MemotestTableroFilaNoExisteException;
 import junit.framework.TestCase;
 
 public class TestMemotestTablero extends TestCase
@@ -224,5 +228,119 @@ public class TestMemotestTablero extends TestCase
 		catch (MemotestTableroCartaNullException e)
 		{
 		}
+	}	
+	
+	public void testPonerCartaFilaInvalida()
+	{
+		MemotestTablero tablero = new MemotestTablero(6, 6);
+		int fila = tablero.getCantidadFilas();
+		int columna = 0;
+		Carta carta = new Carta("X");
+		
+		try
+		{			
+			tablero.ponerCarta( fila, columna, carta);
+			assertTrue( false );
+		}
+		catch (MemotestTableroFilaNoExisteException e)
+		{
+		}
+	}	
+	
+	public void testPonerCartaFilaNegativa()
+	{
+		MemotestTablero tablero = new MemotestTablero(6, 6);
+		int fila = -100;
+		int columna = 0;
+		Carta carta = new Carta("X");
+		
+		try
+		{			
+			tablero.ponerCarta( fila, columna, carta);
+			assertTrue( false );
+		}
+		catch (MemotestTableroFilaNoExisteException e)
+		{
+		}
+	}	
+	
+	public void testPonerCartaColumnaInvalida()
+	{
+		MemotestTablero tablero = new MemotestTablero(6, 6);
+		int columna = tablero.getCantidadColumnas();
+		int fila = 0;
+		Carta carta = new Carta("X");
+		
+		try
+		{			
+			tablero.ponerCarta( fila, columna, carta);
+			assertTrue( false );
+		}
+		catch (MemotestTableroColumnaNoExisteException e)
+		{
+		}
+	}	
+	
+	public void testPonerCartaColumnaNegativa()
+	{
+		MemotestTablero tablero = new MemotestTablero(6, 6);
+		int columna = -100;
+		int fila = 0;
+		Carta carta = new Carta("X");
+		
+		try
+		{			
+			tablero.ponerCarta( fila, columna, carta);
+			assertTrue( false );
+		}
+		catch (MemotestTableroColumnaNoExisteException e)
+		{
+		}
+	}	
+	
+	public void testPonerCarta()
+	{
+		MemotestTablero tablero = new MemotestTablero(6, 6);
+		int columna = 0;
+		int fila = 0;
+		Carta carta = new Carta("X");
+		
+		try
+		{			
+			tablero.ponerCarta( fila, columna, carta);			
+		}
+		catch (MemotestTableroException e)
+		{
+			assertTrue( false );
+		}
+	}	
+	
+	///////////////////////////////////////////////////////////////////////////
+	// Test de getCarta / getMemotestCarta
+	
+	public void testGetCartaIgual()
+	{
+		MemotestTablero tablero = new MemotestTablero(6, 6);
+		int columna = 0;
+		int fila = 0;
+		Carta carta = new Carta("X");
+		
+		tablero.ponerCarta( fila, columna, carta);
+		
+		assertTrue( carta.esIgualA( tablero.getCarta(fila, columna) ) );
+		
+	}	
+	
+	public void testGetMemotestCartaIgual()
+	{
+		MemotestTablero tablero = new MemotestTablero(6, 6);
+		int columna = 0;
+		int fila = 0;
+		Carta carta = new Carta("X");
+		
+		tablero.ponerCarta( fila, columna, carta);
+		
+		assertTrue( carta.esIgualA( tablero.getMemotestCarta(fila, columna) ) );
+		
 	}	
 }
