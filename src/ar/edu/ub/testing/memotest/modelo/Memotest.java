@@ -28,11 +28,11 @@ public class Memotest
 	
 	private static final Integer CANTIDAD_CARTAS_NECESARIAS_POR_TURNO = 2;
 	
-	private MemotestJugador            jugadorDeTurno;
-	private MemotestJugador[]          memotestJugadores;
-	private MemotestTablero            tablero;
-	private List<MemotestCarta>        		   cartasBocaArriba;
-	private MemotestCalculadorDePuntos         calculadorDePuntos;
+	private MemotestJugador            	jugadorDeTurno;
+	private MemotestJugador[]           memotestJugadores;
+	private MemotestTablero            	tablero;
+	private List<MemotestCarta>        	cartasBocaArriba;
+	private MemotestCalculadorDePuntos  calculadorDePuntos;
 	
 	private void inicializarJuego(Dificultad dificultad, Jugador[] jugadores) 
 	{		
