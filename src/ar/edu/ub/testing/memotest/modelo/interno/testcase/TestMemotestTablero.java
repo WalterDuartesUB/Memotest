@@ -343,4 +343,33 @@ public class TestMemotestTablero extends TestCase
 		assertTrue( carta.esIgualA( tablero.getMemotestCarta(fila, columna) ) );
 		
 	}	
+	
+	public void testGetCartaDistinta()
+	{
+		MemotestTablero tablero = new MemotestTablero(6, 6);
+		int columna = 0;
+		int fila = 0;
+		Carta carta = new Carta("X");
+		
+		tablero.ponerCarta( fila, columna, carta);
+		
+		carta = new Carta("Y");
+		
+		assertFalse( carta.esIgualA( tablero.getCarta(fila, columna) ) );
+		
+	}	
+	
+	public void testGetMemotestCartaDistinta()
+	{
+		MemotestTablero tablero = new MemotestTablero(6, 6);
+		int columna = 0;
+		int fila = 0;
+		Carta carta = new Carta("X");
+		
+		tablero.ponerCarta( fila, columna, carta);
+		carta = new Carta("Y");
+		
+		assertFalse( carta.esIgualA( tablero.getMemotestCarta(fila, columna) ) );
+		
+	}	
 }
