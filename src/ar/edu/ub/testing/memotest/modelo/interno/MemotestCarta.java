@@ -1,6 +1,7 @@
 package ar.edu.ub.testing.memotest.modelo.interno;
 
 import ar.edu.ub.testing.memotest.modelo.Carta;
+import ar.edu.ub.testing.memotest.modelo.interno.exception.MemotestCartaVoltearCartaQuitadaException;
 
 /**
  * Representa una Carta dentro del Memotest
@@ -11,6 +12,8 @@ import ar.edu.ub.testing.memotest.modelo.Carta;
  * ---------
  * 2018/04/08	wduartes	Se agrega la validacion que no se puede crear una 
  * 							MemotestCarta con una Carta null
+ * 2018/04/08	wduartes	Se agregan validaciones para no poder voltear una 
+ * 							carta que fue quitada
  */
 public class MemotestCarta extends Carta 
 {
@@ -30,18 +33,29 @@ public class MemotestCarta extends Carta
 		super( carta );	
 		 
 		setCantidadVecesBocaArriba(0);
-		voltearBocaAbajo();
+		this.setEstadoCarta(EstadoCarta.CARTA_BOCA_ABAJO);
 	}
 
 	public void voltearBocaAbajo() 
 	{
-		this.setEstadoCarta( EstadoCarta.CARTA_BOCA_ABAJO );		
+		
+		if( this.estaQuitada() )
+			throw new MemotestCartaVoltearCartaQuitadaException();
+		
+		if( this.estaBocaArriba() )			
+			this.setEstadoCarta( EstadoCarta.CARTA_BOCA_ABAJO );		
 	}
 	
 	public void voltearBocaArriba() 
 	{
-		this.setEstadoCarta( EstadoCarta.CARTA_BOCA_ARRIBA );	
-		this.setCantidadVecesBocaArriba( this.getCantidadVecesBocaArriba() + 1 );
+		if( this.estaQuitada() )
+			throw new MemotestCartaVoltearCartaQuitadaException();
+		
+		if( this.estaBocaAbajo() )
+		{
+			this.setEstadoCarta( EstadoCarta.CARTA_BOCA_ARRIBA );	
+			this.setCantidadVecesBocaArriba( this.getCantidadVecesBocaArriba() + 1 );
+		}		
 	}
 	
 	public void quitarCarta() 
@@ -62,6 +76,11 @@ public class MemotestCarta extends Carta
 	public boolean estaBocaAbajo() 
 	{		
 		return getEstadoCarta() == EstadoCarta.CARTA_BOCA_ABAJO;
+	}
+	
+	private boolean estaQuitada() 
+	{		
+		return getEstadoCarta() == EstadoCarta.CARTA_QUITADA_DE_TABLERO;
 	}
 
 	public boolean estaBocaArriba() 
