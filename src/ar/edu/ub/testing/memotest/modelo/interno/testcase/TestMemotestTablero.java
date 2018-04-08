@@ -3,6 +3,7 @@ package ar.edu.ub.testing.memotest.modelo.interno.testcase;
 import ar.edu.ub.testing.memotest.modelo.interno.MemotestTablero;
 import ar.edu.ub.testing.memotest.modelo.interno.exception.MemotestTableroCantidadColumnasInvalidaException;
 import ar.edu.ub.testing.memotest.modelo.interno.exception.MemotestTableroCantidadFilasInvalidaException;
+import ar.edu.ub.testing.memotest.modelo.interno.exception.MemotestTableroCartaNullException;
 import junit.framework.TestCase;
 
 public class TestMemotestTablero extends TestCase
@@ -134,6 +135,26 @@ public class TestMemotestTablero extends TestCase
 		}
 	}
 	
+	public void testCrearTableroGetFila()
+	{
+		Integer cantidadFilas = 6;
+		Integer cantidadColumnas = 9;
+		
+		MemotestTablero tablero = new MemotestTablero( cantidadFilas, cantidadColumnas );
+		
+		assertEquals(cantidadFilas, tablero.getCantidadFilas() );
+	}
+	
+	public void testCrearTableroGetColumna()
+	{
+		Integer cantidadFilas = 6;
+		Integer cantidadColumnas = 9;
+		
+		MemotestTablero tablero = new MemotestTablero( cantidadFilas, cantidadColumnas );
+		
+		assertEquals(cantidadColumnas, tablero.getCantidadColumnas() );
+	}
+	
 	///////////////////////////////////////////////////////////////////////////
 	// Test de fila
 	
@@ -186,5 +207,22 @@ public class TestMemotestTablero extends TestCase
 	{
 		MemotestTablero tablero = new MemotestTablero(6, 6);
 		assertFalse( tablero.existeColumna( tablero.getCantidadColumnas() ));
+	}
+	
+	///////////////////////////////////////////////////////////////////////////
+	// Test de ponerCarta
+	
+	public void testPonerCartaNull()
+	{
+		MemotestTablero tablero = new MemotestTablero(6, 6);
+		
+		try
+		{
+			tablero.ponerCarta(0, 0, null);
+			assertTrue( false );
+		}
+		catch (MemotestTableroCartaNullException e)
+		{
+		}
 	}	
 }

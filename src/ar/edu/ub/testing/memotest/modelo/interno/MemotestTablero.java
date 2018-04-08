@@ -3,6 +3,7 @@ package ar.edu.ub.testing.memotest.modelo.interno;
 import ar.edu.ub.testing.memotest.modelo.Carta;
 import ar.edu.ub.testing.memotest.modelo.interno.exception.MemotestTableroCantidadColumnasInvalidaException;
 import ar.edu.ub.testing.memotest.modelo.interno.exception.MemotestTableroCantidadFilasInvalidaException;
+import ar.edu.ub.testing.memotest.modelo.interno.exception.MemotestTableroCartaNullException;
 import ar.edu.ub.testing.memotest.modelo.interno.exception.MemotestTableroColumnaNoExisteException;
 import ar.edu.ub.testing.memotest.modelo.interno.exception.MemotestTableroFilaNoExisteException;
 
@@ -80,6 +81,7 @@ public class MemotestTablero
 	 * @param carta Carta a colocar en el tablero
 	 * @exception MemotestTableroFilaNoExisteException si la fila no existe en el tablero
 	 * @exception MemotestTableroColumnaNoExisteException si la fila no existe en el tablero
+	 * @exception MemotestTableroCartaNullException si la Carta que se quiere agregar es null
 	 */
 	public void ponerCarta(Integer fila, Integer columna, Carta carta) 
 	{			
@@ -88,6 +90,9 @@ public class MemotestTablero
 		
 		if( !this.existeColumna(columna))
 			throw new MemotestTableroColumnaNoExisteException(columna);			
+		
+		if( carta == null )
+			throw new MemotestTableroCartaNullException();
 		
 		this.getCartas()[fila][columna] = new MemotestCarta( carta ); 		
 	}
