@@ -129,4 +129,19 @@ public class TestMemotestJugador extends TestCase
 		
 		assertEquals( puntosASumar, jugador.getPuntos() );
 	}
+	
+	public void testSumarPuntosNegativos3()
+	{
+		MemotestJugador	jugador = new MemotestJugador( new Jugador( "asd" ) );
+		Integer puntosASumar = 100;
+		Integer puntosASumar2 = 150;
+		Integer puntosASumarTotal = puntosASumar + puntosASumar2;
+		
+		jugador.sumarPuntos( puntosASumar );
+		jugador.sumarPuntos( -20 );
+		jugador.sumarPuntos( -10 );
+		jugador.sumarPuntos( puntosASumar2 );
+		
+		assertEquals( puntosASumarTotal, jugador.getPuntos() );
+	}
 }
