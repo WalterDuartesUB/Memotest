@@ -2,6 +2,7 @@ package ar.edu.ub.testing.memotest.modelo.dificultad.testcase;
 
 import ar.edu.ub.testing.memotest.modelo.dificultad.Dificultad;
 import ar.edu.ub.testing.memotest.modelo.dificultad.exception.DificultadSinCantidadColumnasException;
+import ar.edu.ub.testing.memotest.modelo.dificultad.exception.DificultadSinCantidadFilasException;
 import ar.edu.ub.testing.memotest.modelo.dificultad.exception.DificultadSinNombreException;
 import junit.framework.TestCase;
 
@@ -94,5 +95,58 @@ public class TestDificultad extends TestCase
 			
 		}		
 	}
-		
+	
+	public void testDificultadColumnas()
+	{
+		Integer columnas = 7;
+		Dificultad dificultad = new Dificultad( "dificultad",  1, columnas );
+		assertEquals( columnas , dificultad.getCantidadColumnas() );		
+	}	
+	
+	///////////////////////////////////////////////////////////////////////////
+	// Pruebo el campo fila
+	
+	
+	public void testDificultadFilasNull()
+	{
+		try
+		{
+			assertNull( new Dificultad( "dificultad", null, 1 ) );
+		} 
+		catch (DificultadSinCantidadFilasException e)
+		{
+			
+		}		
+	}
+	
+	public void testDificultadFilasCero()
+	{
+		try
+		{
+			assertNull( new Dificultad( "dificultad", 0, 1 ) );
+		} 
+		catch (DificultadSinCantidadFilasException e)
+		{
+			
+		}		
+	}	
+	
+	public void testDificultadFilasNegativo()
+	{
+		try
+		{
+			assertNull( new Dificultad( "dificultad", -2, 1 ) );
+		} 
+		catch (DificultadSinCantidadFilasException e)
+		{
+			
+		}		
+	}	
+	
+	public void testDificultadFilas()
+	{
+		Integer filas = 7;
+		Dificultad dificultad = new Dificultad( "dificultad", filas, 1 );
+		assertEquals( filas , dificultad.getCantidadFilas() );		
+	}	
 }

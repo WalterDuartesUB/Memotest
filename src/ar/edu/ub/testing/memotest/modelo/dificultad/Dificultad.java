@@ -12,7 +12,7 @@ import ar.edu.ub.testing.memotest.modelo.dificultad.exception.DificultadSinNombr
  *
  * Historial
  * ---------
- * 2018/04/08	wduartes	Se agregan las excepciones al constructor 
+ * 2018/04/08	wduartes	Se agregan las excepciones al constructor para validar los campos
  */
 public class Dificultad 
 {
