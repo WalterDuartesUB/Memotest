@@ -1,5 +1,7 @@
 package ar.edu.ub.testing.memotest.modelo;
 
+import ar.edu.ub.testing.memotest.modelo.exception.CartaSinDibujoException;
+import ar.edu.ub.testing.memotest.modelo.exception.CartaSinDibujoLomoException;
 import ar.edu.ub.testing.utils.ArrayUtils;
 
 /**
@@ -36,6 +38,9 @@ public class Carta
 	
 	private void setDibujo(String dibujo) 
 	{
+		if( dibujo == null)
+			throw new CartaSinDibujoException();
+		
 		this.dibujo = dibujo;
 	}
 	
@@ -46,6 +51,9 @@ public class Carta
 	
 	private void setDibujoLomo(String dibujoLomo) 
 	{
+		if( dibujoLomo == null)
+			throw new CartaSinDibujoLomoException();
+		
 		this.dibujoLomo = dibujoLomo;
 	}
 
