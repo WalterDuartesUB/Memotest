@@ -1,6 +1,7 @@
 package ar.edu.ub.testing.memotest.modelo.testcase;
 
 import ar.edu.ub.testing.memotest.modelo.Carta;
+import ar.edu.ub.testing.memotest.modelo.exception.CartaSinCartaException;
 import ar.edu.ub.testing.memotest.modelo.exception.CartaSinDibujoException;
 import ar.edu.ub.testing.memotest.modelo.exception.CartaSinDibujoLomoException;
 import junit.framework.TestCase;
@@ -11,12 +12,47 @@ public class TestCarta extends TestCase
 	{
 		try
 		{
-			assertNull( new Carta( null ) );
+			String dibujo = null;
+			assertNull( new Carta( dibujo ) );
 		}
 		catch (CartaSinDibujoException e)
 		{
 			
 		}
+	}
+	
+	public void testCartaSinCarta()
+	{
+		try
+		{
+			Carta unaCarta = null;
+			assertNull( new Carta( unaCarta ) );
+		}
+		catch (CartaSinCartaException e)
+		{
+			
+		}
+	}
+	
+	public void testCartaConCartaDibujo()
+	{
+		String dibujoCarta = "DASC";
+		Carta unaCarta = new Carta( dibujoCarta );
+		Carta otraCarta = new Carta( unaCarta );
+		
+		assertEquals(dibujoCarta, unaCarta.getDibujo() );
+		assertEquals(dibujoCarta, otraCarta.getDibujo() );
+	}
+	
+	public void testCartaConCartaDibujoYLomo()
+	{
+		String dibujoCarta = "DASC";
+		String dibujoLomo = "DFAS";
+		Carta unaCarta = new Carta( dibujoCarta, dibujoLomo );
+		Carta otraCarta = new Carta( unaCarta );
+		
+		assertEquals(dibujoCarta, otraCarta.getDibujo() );
+		assertEquals(dibujoLomo, otraCarta.getDibujoLomo() );
 	}
 	
 	public void testCartaConDibujoSinDibujoLomo()

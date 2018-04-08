@@ -1,5 +1,6 @@
 package ar.edu.ub.testing.memotest.modelo;
 
+import ar.edu.ub.testing.memotest.modelo.exception.CartaSinCartaException;
 import ar.edu.ub.testing.memotest.modelo.exception.CartaSinDibujoException;
 import ar.edu.ub.testing.memotest.modelo.exception.CartaSinDibujoLomoException;
 import ar.edu.ub.testing.utils.ArrayUtils;
@@ -33,6 +34,15 @@ public class Carta
 	}
 	
 	
+	public Carta(Carta carta)
+	{
+		if( carta == null )
+			throw new CartaSinCartaException();
+		
+		this.setDibujo(carta.getDibujo());
+		this.setDibujoLomo(carta.getDibujoLomo());
+	}
+
 	public String getDibujo()
 	{	
 		return this.dibujo;

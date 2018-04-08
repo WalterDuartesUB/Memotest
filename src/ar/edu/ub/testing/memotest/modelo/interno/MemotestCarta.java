@@ -7,6 +7,10 @@ import ar.edu.ub.testing.memotest.modelo.Carta;
  * A diferencia de la Carta MemotestCarta tiene la informacion sobre su estado dentro del Memotest (fu,fd,q)
  * @author Walter Duartes
  *
+ * Historial
+ * ---------
+ * 2018/04/08	wduartes	Se agrega la validacion que no se puede crear una 
+ * 							MemotestCarta con una Carta null
  */
 public class MemotestCarta extends Carta 
 {
@@ -19,12 +23,12 @@ public class MemotestCarta extends Carta
 	};
 	
 	private EstadoCarta estadoCarta;
-	private Integer cantidadVecesBocaArriba;
+	private Integer cantidadVecesBocaArriba;	
 	
 	public MemotestCarta(Carta carta) 
 	{
-		super( carta.getDibujo(), carta.getDibujoLomo() );
-		
+		super( carta );	
+		 
 		setCantidadVecesBocaArriba(0);
 		voltearBocaAbajo();
 	}
