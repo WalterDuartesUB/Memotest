@@ -14,7 +14,8 @@ import ar.edu.ub.testing.utils.ArrayUtils;
  * 							que llega por parametro es null, devuelva false
  * 2018/04/08	wduartes	Se agregan las excepciones para el dibujo y el 
  * 							dibujo del lomo de la carta
- * 
+ * 2018/04/08	wduartes	Aparece un nuevo constructor para crear un Carta
+ * 							con otro Carta
  */
 public class Carta 
 {
