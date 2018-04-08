@@ -6,7 +6,10 @@ import ar.edu.ub.testing.memotest.modelo.Carta;
  * MemotestTablero modela el tablero dentro del memotest
  * En cada posicion del tablero hay MemotestCarta con sus respectivos estados y dibujos
  * @author Walter Duartes
- *
+ * 
+ * Historial
+ * ---------
+ * 2018/04/08	wduartes	getCarta ahora llama a getMemotestCarta
  */
 public class MemotestTablero 
 {
@@ -22,8 +25,8 @@ public class MemotestTablero
 	}
 
 	public Carta getCarta( Integer fila, Integer columna) 
-	{
-		return this.getCartas()[fila][columna];
+	{		
+		return this.getMemotestCarta(fila, columna);
 	}
 
 	public MemotestCarta getMemotestCarta( Integer fila, Integer columna) 
