@@ -1,4 +1,4 @@
-package ar.edu.ub.testing.memotest.testcase;
+package ar.edu.ub.testing.utils.testcase;
 
 import ar.edu.ub.testing.utils.StringUtils;
 import junit.framework.TestCase;

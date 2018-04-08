@@ -1,4 +1,4 @@
-package ar.edu.ub.testing.memotest.testcase;
+package ar.edu.ub.testing.utils.testcase;
 
 import java.util.HashMap;
 import java.util.Map;
