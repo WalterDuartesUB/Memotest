@@ -14,7 +14,7 @@ public class MemotestJugador extends Jugador
 	
 	public MemotestJugador(Jugador jugador) 
 	{
-		super(jugador.getAlias());	
+		super( jugador );	
 	}
 	
 	public void sumarPuntos( Integer puntos ) 

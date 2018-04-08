@@ -1,6 +1,7 @@
 package ar.edu.ub.testing.memotest.modelo;
 
 import ar.edu.ub.testing.memotest.modelo.exception.JugadorSinAliasException;
+import ar.edu.ub.testing.memotest.modelo.exception.JugadorSinJugadorException;
 
 /**
  * Jugador representa la informacion de un jugador
@@ -10,6 +11,8 @@ import ar.edu.ub.testing.memotest.modelo.exception.JugadorSinAliasException;
  * ---------
  * 2018/04/08	wduartes	Se agrega la validacion para que el jugador tenga
  * 							un alias al crearse
+ * 2018/04/08	wduartes	Aparece un constructor para crear un Jugador
+ * 							basado en otro Jugador
  */
 public class Jugador 
 {
@@ -20,6 +23,15 @@ public class Jugador
 	{
 		setAlias(alias);
 		setPuntos(0);		
+	}
+
+	public Jugador(Jugador jugador)
+	{
+		if( jugador == null )
+			throw new JugadorSinJugadorException();
+		
+		this.setAlias( jugador.getAlias() );
+		this.setPuntos(0);
 	}
 
 	public String getAlias() 
