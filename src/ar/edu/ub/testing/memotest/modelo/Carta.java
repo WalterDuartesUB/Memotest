@@ -2,6 +2,15 @@ package ar.edu.ub.testing.memotest.modelo;
 
 import ar.edu.ub.testing.utils.ArrayUtils;
 
+/**
+ * @author Walter Duartes
+ * 
+ * Historial
+ * ---------
+ * 2018/04/08	wduartes	Se modifica el metodo esIgualA para que si la carta
+ * 							que llega por parametro es null, devuelva false
+ * 
+ */
 public class Carta 
 {
 
@@ -40,8 +49,20 @@ public class Carta
 		this.dibujoLomo = dibujoLomo;
 	}
 
+	/**
+	 * Determina si dos cartas son iguales
+	 * 
+	 * @param carta una Carta a comparar
+	 * @return true si el dibujo de la carta es igual
+	 * @return false si el dibujo de la carta no es igual
+	 * @return false si la carta que llega por parametro es null
+	 */
+	
 	public boolean esIgualA(Carta carta) 
 	{
+		if( carta == null )
+			return false;
+		
 		return this.getDibujo().compareTo( carta.getDibujo() ) == 0;
 	}
 
