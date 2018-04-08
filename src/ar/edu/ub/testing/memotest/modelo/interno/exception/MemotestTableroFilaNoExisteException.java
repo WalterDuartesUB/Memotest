@@ -6,7 +6,7 @@ public class MemotestTableroFilaNoExisteException extends MemotestTableroExcepti
 	
 	public MemotestTableroFilaNoExisteException( Integer fila  )
 	{
-		super( String.format("No se puede obtener una carta de la fila %d porque no existe en el tablero.", fila));
+		super( String.format("No se puede obtener/poner una carta en la fila %d porque no existe en el tablero.", fila));
 	}
 
 }
