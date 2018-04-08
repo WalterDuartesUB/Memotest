@@ -8,18 +8,20 @@ public class ConsolaMenu
 	private String tituloMenu;
 	private ConsolaMenuItem[] menuItem;
 	private ConsolaMenuItem menuItemElegido;
-	private boolean ignorarMayusculas;
+	private boolean ignorarMayusculas;	
+	private Consola consola;
 	
-	private ConsolaMenu(String tituloMenu, ConsolaMenuItem[] MenuItem)
+	private ConsolaMenu( Consola consola, String tituloMenu, ConsolaMenuItem[] MenuItem)
 	{
+		this.setConsola(consola);
 		this.setTituloMenu(tituloMenu);
 		this.setMenuItem(MenuItem);		
 		this.setIgnorarMayusculas( true );
 	}
 	
-	public static ConsolaMenuItem mostrarMenu( String tituloMenu, ConsolaMenuItem[] MenuItem)
+	public static ConsolaMenuItem mostrarMenu( Consola consola, String tituloMenu, ConsolaMenuItem[] MenuItem)
 	{
-		ConsolaMenu menu = new ConsolaMenu( tituloMenu, MenuItem );		
+		ConsolaMenu menu = new ConsolaMenu( consola, tituloMenu, MenuItem );		
 		
 		return menu.mostrarMenu();
 	}
@@ -32,7 +34,7 @@ public class ConsolaMenu
 		
 		while( this.noEligioOpcion() )
 		{		
-			Consola.limpiarPantalla();
+			this.getConsola().limpiarPantalla();
 			
 			this.imprimir();			
 			this.imprimirOpcionInvalida();
@@ -44,7 +46,7 @@ public class ConsolaMenu
 
 	private void imprimirOpcionInvalida() 
 	{
-		System.out.println("(La opción ingresada no es valida. Por favor, ingrese otra.)");		
+		this.getConsola().println("(La opción ingresada no es valida. Por favor, ingrese otra.)");		
 	}
 
 	private void imprimir()
@@ -55,7 +57,7 @@ public class ConsolaMenu
 	
 	private boolean elegirMenuItem() 
 	{
-		String  opcionElegidaPorUsuario = Consola.nextLine();
+		String  opcionElegidaPorUsuario = this.getConsola().nextLine();
 		boolean pudeElegirOpcion = this.existeMenuItemConOpcion( opcionElegidaPorUsuario );
 				
 		if( pudeElegirOpcion )
@@ -101,13 +103,13 @@ public class ConsolaMenu
 
 	private void imprimir(ConsolaMenuItem menuItem) 
 	{
-		System.out.println( String.format("%3s - %-20s", menuItem.getOpcionEnConsola(), menuItem.getDescripcion() ) );
+		this.getConsola().println( String.format("%3s - %-20s", menuItem.getOpcionEnConsola(), menuItem.getDescripcion() ) );
 	}
 
 	private void imprimirTitulo() 
 	{
-		System.out.println( this.getTituloMenu() );
-		System.out.println( String.format("%-" + new Integer( this.getTituloMenu().length( )).toString() + "s", " ").replace(" ", "-")  );
+		this.getConsola().println( this.getTituloMenu() );
+		this.getConsola().println( String.format("%-" + new Integer( this.getTituloMenu().length( )).toString() + "s", " ").replace(" ", "-")  );
 	}
 
 	public String getTituloMenu() 
@@ -146,6 +148,16 @@ public class ConsolaMenu
 
 	private void setIgnorarMayusculas(boolean ignorarMayusculas) {
 		this.ignorarMayusculas = ignorarMayusculas;
+	}
+
+	private Consola getConsola()
+	{
+		return consola;
+	}
+
+	private void setConsola(Consola consola)
+	{
+		this.consola = consola;
 	}
 	
 }

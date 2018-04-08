@@ -1,5 +1,7 @@
 package ar.edu.ub.testing.memotest.consola.menu;
 
+import ar.edu.ub.testing.memotest.consola.Consola;
+
 public class ConsolaMenuFinJuego 
 {
 	public enum DecisionFinJuego
@@ -9,7 +11,7 @@ public class ConsolaMenuFinJuego
 		DFJ_SALIR_APLICACION
 	};
 	
-	public static DecisionFinJuego mostrarMenu( )
+	public static DecisionFinJuego mostrarMenu(  Consola consola )
 	{
 		String 				tituloMenu = "Fin del juego";
 		ConsolaMenuItem[] 	menuItem = new ConsolaMenuItem[]
@@ -19,6 +21,6 @@ public class ConsolaMenuFinJuego
 						new ConsolaMenuItem("Salir de la aplicación", "S", DecisionFinJuego.DFJ_SALIR_APLICACION )						
 				};
 				
-		return (DecisionFinJuego) ConsolaMenu.mostrarMenu(tituloMenu, menuItem).getItemData();
+		return (DecisionFinJuego) ConsolaMenu.mostrarMenu( consola, tituloMenu, menuItem).getItemData();
 	}
 }

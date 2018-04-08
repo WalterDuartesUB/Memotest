@@ -25,7 +25,13 @@ public class MemotestConsola
 	/**
 	 * Al pedir las coordenadas de una carta al usuario, se utiliza este campo para destacar la fila seleccionada
 	 */
-	private Integer filaSeleccionada;
+	private Integer filaSeleccionada;	
+	private Consola consola;
+	
+	public MemotestConsola( Consola consola )
+	{
+		this.setConsola(consola);
+	}
 	
 	/**
 	 * Metodo para jugar al memotest por consola
@@ -45,7 +51,7 @@ public class MemotestConsola
 			this.jugarPartida(dificultad, jugadores);
 			
 			//Preguinto al usuario si quiere volver a jugar o salir de la app
-			decisionUsuario = ConsolaMenuFinJuego.mostrarMenu();
+			decisionUsuario = ConsolaMenuFinJuego.mostrarMenu( this.getConsola() );
 			
 			//Si marca la opcion de reiniciar, pido que elijan la dificultad nueva
 			if( decisionUsuario == DecisionFinJuego.DFJ_JUGAR_JUEGO_NUEVO_ELIGIENDO_DIFICULTAD )
@@ -83,17 +89,17 @@ public class MemotestConsola
 
 	private void imprimirLasCartasNoSonIguales() 
 	{
-		System.out.println("Las cartas NO son iguales!\nEl jugador de turno NO suma puntos.\nApreta enter para pasar al proximo turno.");
+		this.getConsola().println("Las cartas NO son iguales!\nEl jugador de turno NO suma puntos.\nApreta enter para pasar al proximo turno.");
 		
-		Consola.nextLine();
+		this.getConsola().nextLine();
 		
 	}
 
 	private void imprimirLasCartasSonIguales() 
 	{
-		System.out.println("Las cartas son iguales!\nApreta enter para pasar al proximo turno.");
+		this.getConsola().println("Las cartas son iguales!\nApreta enter para pasar al proximo turno.");
 	
-		Consola.nextLine();		
+		this.getConsola().nextLine();		
 	}
 
 	private void mostrarJugadoresOrdenadosPorPuntos(Memotest memotest) 
@@ -106,7 +112,7 @@ public class MemotestConsola
 			this.imprimirJugadorEnTabla( new Integer(posicion + 1).toString() + "-", jugadoresPorRanking[posicion] );
 		
 		//Dejo una linea entre la tabla de jugadores y el menu de fin de juego
-		System.out.println();		
+		this.getConsola().println();		
 	}
 
 	/**
@@ -131,7 +137,7 @@ public class MemotestConsola
 												new ConsolaMenuItem("Dificil", "3", new DificultadDificil() )
 											};
 		
-		return ConsolaMenuDificultad.mostrarMenu("Elegi la dificultad para el juego", listaOpcionesMenu );
+		return ConsolaMenuDificultad.mostrarMenu( this.getConsola(), "Elegi la dificultad para el juego", listaOpcionesMenu );
 	}
 
 	private void pedirCartasAlJugadorDeTurno(Memotest memotest) 
@@ -154,9 +160,9 @@ public class MemotestConsola
 
 	private void imprimirEsaCartaYaEstaBocaArriba() 
 	{
-		System.out.println("Esa carta ya fue elegida, por favor elija otra.");
+		this.getConsola().println("Esa carta ya fue elegida, por favor elija otra.");
 		
-		Consola.nextLine();			
+		this.getConsola().nextLine();			
 	}
 
 	private void quitarSeleccionFila() 
@@ -187,8 +193,8 @@ public class MemotestConsola
 		while( filaUsuario < valorMinimo || filaUsuario > valorMaximo || !StringUtils.isNumeric( inputUsuario ) )
 		{
 			this.imprimir( memotest );		
-			System.out.print( mensajeUsuario );
-			inputUsuario = Consola.nextLine();
+			this.getConsola().print( mensajeUsuario );
+			inputUsuario = this.getConsola().nextLine();
 			
 			//Si es un nro, lo convierto
 			if( StringUtils.isNumeric( inputUsuario ) )
@@ -206,12 +212,12 @@ public class MemotestConsola
 	private void imprimir(Memotest memotest) 
 	{
 		
-		Consola.limpiarPantalla();
+		this.getConsola().limpiarPantalla();
 		
 		this.imprimirTablaDeJugadores( memotest );
 
 		//Dejo una linea entre la tabla de jugadores y el memotest
-		System.out.println();
+		this.getConsola().println();
 		
 		//Imprimo el memotest
 		this.imprimirTablero( memotest );
@@ -231,12 +237,12 @@ public class MemotestConsola
 		for( int fila = 0; fila < memotest.getCantidadFilas(); fila++ )
 		{			
 			//Imprimo el nro de fila antes de mostrar las cartas
-			System.out.print( String.format("%2d |", fila + 1 ) );
+			this.getConsola().print( String.format("%2d |", fila + 1 ) );
 			
 			for( int columna = 0; columna < memotest.getCantidadColumnas(); columna++ )
 				this.imprimir( memotest, fila, columna );
 			
-			System.out.println();
+			this.getConsola().println();
 			
 			this.imprimirSeparadorDeFilas(memotest, this.esFilaSeleccionada( fila ) || this.esFilaSeleccionada( fila + 1) );
 		}
@@ -245,12 +251,12 @@ public class MemotestConsola
 
 	private void imprimirNroColumnas(Integer cantidadColumnas) 
 	{
-		System.out.print("   |");
+		this.getConsola().print("   |");
 		
 		for( int columna = 0; columna < cantidadColumnas; columna++)
-			System.out.print( String.format( " %-2d |", columna + 1 ) );
+			this.getConsola().print( String.format( " %-2d |", columna + 1 ) );
 		
-		System.out.println();
+		this.getConsola().println();
 	}
 
 	private boolean esFilaSeleccionada(Integer fila) 
@@ -260,7 +266,7 @@ public class MemotestConsola
 
 	private void imprimirSeparadorDeFilas(Memotest memotest, boolean esFilaSeleccionada) 
 	{
-		System.out.println( String.format("%-"+ new Integer( 4 + memotest.getCantidadColumnas() * 5 ).toString() + "s", " ").replace(" ", esFilaSeleccionada ? "*" : "—" ) );
+		this.getConsola().println( String.format("%-"+ new Integer( 4 + memotest.getCantidadColumnas() * 5 ).toString() + "s", " ").replace(" ", esFilaSeleccionada ? "*" : "—" ) );
 	}
 
 	private void imprimir( Memotest memotest, Integer fila, Integer columna) 
@@ -268,11 +274,11 @@ public class MemotestConsola
 		Carta carta = memotest.getCarta(fila, columna);
 				
 		if( memotest.estaLaCartaBocaAbajo( fila, columna ) )
-			System.out.print( String.format( " %-2s |", carta.getDibujoLomo() ) );			
+			this.getConsola().print( String.format( " %-2s |", carta.getDibujoLomo() ) );			
 		else if( memotest.estaLaCartaBocaArriba( fila, columna ) ) 
-			System.out.print( String.format( " %-2s |", carta.getDibujo() ) );
+			this.getConsola().print( String.format( " %-2s |", carta.getDibujo() ) );
 		else
-			System.out.print( String.format( " %-2s |", "" ) );
+			this.getConsola().print( String.format( " %-2s |", "" ) );
 		
 	}
 
@@ -288,13 +294,13 @@ public class MemotestConsola
 	}
 
 	private void imprimirCabeceraTablaDeJugadores() {
-		System.out.println( String.format("   %-20s|%s", "Jugador", "Puntos") );
-		System.out.println( String.format("%-32s", " ").replace(" ", "—") );		
+		this.getConsola().println( String.format("   %-20s|%s", "Jugador", "Puntos") );
+		this.getConsola().println( String.format("%-32s", " ").replace(" ", "—") );		
 	}
 
 	private void imprimirJugadorEnTabla(String indicador, Jugador jugador) 
 	{
-		System.out.println( String.format("%3s%-20s|%d", indicador, jugador.getAlias(), jugador.getPuntos() ) );		
+		this.getConsola().println( String.format("%3s%-20s|%d", indicador, jugador.getAlias(), jugador.getPuntos() ) );		
 	}
 
 	private Integer getFilaSeleccionada() 
@@ -305,5 +311,15 @@ public class MemotestConsola
 	private void setFilaSeleccionada(Integer filaSeleccionada) 
 	{
 		this.filaSeleccionada = filaSeleccionada;
+	}
+
+	private Consola getConsola()
+	{
+		return consola;
+	}
+
+	private void setConsola(Consola consola)
+	{
+		this.consola = consola;
 	}
 }

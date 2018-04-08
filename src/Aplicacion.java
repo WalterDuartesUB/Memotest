@@ -1,4 +1,5 @@
 import ar.edu.ub.testing.memotest.consola.Consola;
+import ar.edu.ub.testing.memotest.consola.ConsolaTeclado;
 import ar.edu.ub.testing.memotest.consola.MemotestConsola;
 /**
  * Se pretende implementar una solucion para el siguiente problema:
@@ -20,11 +21,13 @@ public class Aplicacion
 	public static void main(String[] args) 
 	{
 
-		MemotestConsola memotest = new MemotestConsola();
+		Consola consola = ConsolaTeclado.getConsola();
+		
+		MemotestConsola memotest = new MemotestConsola( consola );
 				
 		memotest.jugar();
 		
-		Consola.finalizar();
+		consola.finalizar();
 	}
 
 }
