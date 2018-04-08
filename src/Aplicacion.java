@@ -21,8 +21,6 @@ public class Aplicacion
 	{
 
 		MemotestConsola memotest = new MemotestConsola();
-		
-		Consola.inicializar();
 				
 		memotest.jugar();
 		

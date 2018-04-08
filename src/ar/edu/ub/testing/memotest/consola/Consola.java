@@ -16,7 +16,7 @@ public final class Consola
 	 * metodo para inicializar los recursos para manejo de consola
 	 * debe invocarse solo una vez al inicio de la aplicacion para habilitar el uso de la consola
 	 */
-	public static void inicializar()
+	private static void inicializar()
 	{
 		if( getIn() == null )
 			setIn(new Scanner( System.in ));
@@ -28,7 +28,7 @@ public final class Consola
 	 */
 	public static void finalizar()
 	{
-		if( getIn() == null )
+		if( getIn() != null )
 			getIn().close();
 	}
 		
