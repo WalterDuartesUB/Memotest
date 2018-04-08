@@ -126,12 +126,12 @@ public class MemotestTablero
 
 	public boolean existeFila( Integer fila )
 	{
-		return fila >= 0 && fila <= this.getCantidadFilas();
+		return fila >= 0 && fila < this.getCantidadFilas();
 	}
 
 	public boolean existeColumna( Integer columna )
 	{
-		return columna >= 0 && columna <= this.getCantidadColumnas();
+		return columna >= 0 && columna < this.getCantidadColumnas();
 	}	
 	
 	
