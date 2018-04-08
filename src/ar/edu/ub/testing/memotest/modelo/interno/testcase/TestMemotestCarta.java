@@ -53,6 +53,16 @@ public class TestMemotestCarta extends TestCase
 		assertFalse( memotestCarta.estaBocaArriba() );
 	}
 	
+	public void testMemotestCartaSeCreaSinVoltearUnaVez()
+	{
+		
+		String dibujoCarta = "ASD";
+		Carta carta = new Carta( dibujoCarta );
+		MemotestCarta memotestCarta = new MemotestCarta(carta);
+				
+		assertFalse( memotestCarta.fueVolteadaSoloUnaVez() );
+	}
+	
 	public void testMemotestCartaVoltearBocaArriba()
 	{
 		
@@ -159,6 +169,7 @@ public class TestMemotestCarta extends TestCase
 		
 		memotestCarta.quitarCarta();	
 		
+		assertFalse( memotestCarta.fueVolteadaSoloUnaVez() );
 		assertFalse( memotestCarta.estaBocaArriba() );
 		assertFalse( memotestCarta.estaBocaAbajo() );
 	}
@@ -203,7 +214,8 @@ public class TestMemotestCarta extends TestCase
 		
 		try
 		{
-			memotestCarta.voltearBocaAbajo();			
+			memotestCarta.voltearBocaAbajo();
+			assertTrue( false );
 		}
 		catch (MemotestCartaVoltearCartaQuitadaException e)
 		{
@@ -225,7 +237,8 @@ public class TestMemotestCarta extends TestCase
 		
 		try
 		{
-			memotestCarta.voltearBocaArriba();			
+			memotestCarta.voltearBocaArriba();				
+			assertTrue( false );
 		}
 		catch (MemotestCartaVoltearCartaQuitadaException e)
 		{
@@ -235,5 +248,110 @@ public class TestMemotestCarta extends TestCase
 		assertFalse( memotestCarta.estaBocaArriba() );
 		assertFalse( memotestCarta.estaBocaAbajo() );		
 	}
+	
+	public void testMemotestCartaFueVolteadaUnaVez()
+	{
 		
+		String dibujoCarta = "ASD";
+		Carta carta = new Carta( dibujoCarta );
+		MemotestCarta memotestCarta = new MemotestCarta(carta);
+				
+		memotestCarta.voltearBocaArriba();	
+		
+		assertTrue( memotestCarta.fueVolteadaSoloUnaVez() );
+	}
+	
+	public void testMemotestCartaFueVolteadaUnaVezYQuitada()
+	{
+		
+		String dibujoCarta = "ASD";
+		Carta carta = new Carta( dibujoCarta );
+		MemotestCarta memotestCarta = new MemotestCarta(carta);
+		
+		memotestCarta.voltearBocaArriba();	
+		memotestCarta.quitarCarta();	
+		
+		assertTrue( memotestCarta.fueVolteadaSoloUnaVez() );
+	}
+	
+	public void testMemotestCartaFueVolteadaUnaVezBocaArribaVariasVeces()
+	{
+		
+		String dibujoCarta = "ASD";
+		Carta carta = new Carta( dibujoCarta );
+		MemotestCarta memotestCarta = new MemotestCarta(carta);
+		
+		memotestCarta.voltearBocaArriba();	
+		memotestCarta.voltearBocaArriba();	
+		memotestCarta.voltearBocaArriba();	
+		
+		assertTrue( memotestCarta.fueVolteadaSoloUnaVez() );
+	}
+	
+	public void testMemotestCartaFueVolteadaMasDeUnaVezTerminandoBocaArriba()
+	{
+		
+		String dibujoCarta = "ASD";
+		Carta carta = new Carta( dibujoCarta );
+		MemotestCarta memotestCarta = new MemotestCarta(carta);
+		
+		memotestCarta.voltearBocaArriba();	
+		memotestCarta.voltearBocaAbajo();	
+		memotestCarta.voltearBocaArriba();		
+		memotestCarta.voltearBocaAbajo();	
+		memotestCarta.voltearBocaArriba();	
+		
+		assertFalse( memotestCarta.fueVolteadaSoloUnaVez() );
+	}
+	
+	public void testMemotestCartaFueVolteadaMasDeUnaVezTerminandoBocaAbajo()
+	{
+		
+		String dibujoCarta = "ASD";
+		Carta carta = new Carta( dibujoCarta );
+		MemotestCarta memotestCarta = new MemotestCarta(carta);
+		
+		memotestCarta.voltearBocaArriba();	
+		memotestCarta.voltearBocaAbajo();	
+		memotestCarta.voltearBocaArriba();		
+		memotestCarta.voltearBocaAbajo();			
+		
+		assertFalse( memotestCarta.fueVolteadaSoloUnaVez() );
+	}
+	
+	public void testMemotestCartaFueVolteadaMasDeUnaVezTerminandoBocaArribaYQuitada()
+	{
+		
+		String dibujoCarta = "ASD";
+		Carta carta = new Carta( dibujoCarta );
+		MemotestCarta memotestCarta = new MemotestCarta(carta);
+		
+		memotestCarta.voltearBocaArriba();	
+		memotestCarta.voltearBocaAbajo();	
+		memotestCarta.voltearBocaArriba();		
+		memotestCarta.voltearBocaAbajo();	
+		memotestCarta.voltearBocaArriba();	
+		
+		memotestCarta.quitarCarta();	
+		
+		assertFalse( memotestCarta.fueVolteadaSoloUnaVez() );
+	}
+	
+	public void testMemotestCartaFueVolteadaMasDeUnaVezTerminandoBocaAbajoYQuitada()
+	{
+		
+		String dibujoCarta = "ASD";
+		Carta carta = new Carta( dibujoCarta );
+		MemotestCarta memotestCarta = new MemotestCarta(carta);
+		
+		memotestCarta.voltearBocaArriba();	
+		memotestCarta.voltearBocaAbajo();	
+		memotestCarta.voltearBocaArriba();		
+		memotestCarta.voltearBocaAbajo();			
+		
+		memotestCarta.quitarCarta();
+		
+		assertFalse( memotestCarta.fueVolteadaSoloUnaVez() );
+	}
+	
 }
