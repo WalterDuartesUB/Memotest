@@ -11,6 +11,8 @@ import ar.edu.ub.testing.utils.ArrayUtils;
  * ---------
  * 2018/04/08	wduartes	Se modifica el metodo esIgualA para que si la carta
  * 							que llega por parametro es null, devuelva false
+ * 2018/04/08	wduartes	Se agregan las excepciones para el dibujo y el 
+ * 							dibujo del lomo de la carta
  * 
  */
 public class Carta 
