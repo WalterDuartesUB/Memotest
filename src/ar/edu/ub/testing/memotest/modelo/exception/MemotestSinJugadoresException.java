@@ -4,9 +4,9 @@ public class MemotestSinJugadoresException extends MemotestException
 {
 	private static final long serialVersionUID = 1L;
 
-	public MemotestSinJugadoresException(String msg)
+	public MemotestSinJugadoresException()
 	{
-		super(msg);
+		super("Debe haber por lo menos un jugador para poder inicializar el memotest.");
 	}
 
 }

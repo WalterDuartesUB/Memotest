@@ -5,6 +5,8 @@ import java.util.List;
 
 
 import ar.edu.ub.testing.memotest.modelo.dificultad.Dificultad;
+import ar.edu.ub.testing.memotest.modelo.exception.MemotestSinDificultadException;
+import ar.edu.ub.testing.memotest.modelo.exception.MemotestSinJugadoresException;
 import ar.edu.ub.testing.memotest.modelo.interno.MemotestCalculadorDePuntos;
 import ar.edu.ub.testing.memotest.modelo.interno.MemotestCarta;
 import ar.edu.ub.testing.memotest.modelo.interno.MemotestJugador;
@@ -16,6 +18,10 @@ import ar.edu.ub.testing.memotest.modelo.interno.OrdenarJugadorPorPuntos;
  * publica funciones para poder implementar un juego en cualquier interfaz de usuario ( Consola o Ventana )
  * @author wduartes
  *
+ * Historial
+ * ---------
+ * 2018/04/08	wduartes	Se valida que para construir un Memotest haya 
+ * 							una dificultad y una lista de jugadores
  */
 public class Memotest 
 {
@@ -25,11 +31,17 @@ public class Memotest
 	private MemotestJugador            jugadorDeTurno;
 	private MemotestJugador[]          memotestJugadores;
 	private MemotestTablero            tablero;
-	private List<MemotestCarta>        cartasBocaArriba;
+	private List<MemotestCarta>        		   cartasBocaArriba;
 	private MemotestCalculadorDePuntos         calculadorDePuntos;
 	
 	private void inicializarJuego(Dificultad dificultad, Jugador[] jugadores) 
 	{		
+		
+		if( dificultad == null )
+			throw new MemotestSinDificultadException();
+		
+		if( !this.validarHayJugadores( jugadores ) )
+			throw new MemotestSinJugadoresException();
 		
 		this.inicializarJugadores( jugadores );
 	
@@ -42,6 +54,20 @@ public class Memotest
 		this.vaciarListaCartasBocaArriba();
 	}
 	
+	private boolean validarHayJugadores(Jugador[] jugadores)
+	{
+		if( jugadores == null || jugadores.length == 0 )
+			return false;
+		
+		for( int posicion = 0; posicion < jugadores.length; posicion++ )
+		{
+			if( jugadores[posicion] == null )
+				return false;
+		}
+		
+		return true;
+	}
+
 	private MemotestJugador getJugadorDeTurno() 
 	{
 		return jugadorDeTurno;
@@ -68,7 +94,7 @@ public class Memotest
 	}
 	
 	private void inicializarTablero( Dificultad dificultad ) 
-	{
+	{		
 		this.setTablero( new MemotestTablero( dificultad.getCantidadFilas(), dificultad.getCantidadColumnas() ) );
 		
 		Carta[] cartas =  Carta.mezclar( this.crearCartas( Memotest.CANTIDAD_CARTAS_NECESARIAS_POR_TURNO ) );
