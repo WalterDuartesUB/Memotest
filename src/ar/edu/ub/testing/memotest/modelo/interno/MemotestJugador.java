@@ -15,6 +15,9 @@ public class MemotestJugador extends Jugador
 	public MemotestJugador(Jugador jugador) 
 	{
 		super( jugador );	
+		
+		//Se inicializa por confianza en null sin usar el setter
+		this.proximoJugador = null;
 	}
 	
 	public void sumarPuntos( Integer puntos ) 

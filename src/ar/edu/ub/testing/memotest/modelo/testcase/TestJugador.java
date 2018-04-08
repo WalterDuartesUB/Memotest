@@ -10,7 +10,20 @@ public class TestJugador extends TestCase
 	{
 		try
 		{
-			assertNotNull( new Jugador( null ) );
+			String alias = null;
+			assertNotNull( new Jugador( alias ) );
+		}
+		catch (JugadorSinAliasException e)
+		{
+		}
+	}
+	
+	public void testJugadorOtroJugadorNull()
+	{
+		try
+		{
+			Jugador jugador = null;
+			assertNotNull( new Jugador( jugador ) );
 		}
 		catch (JugadorSinAliasException e)
 		{
@@ -51,6 +64,22 @@ public class TestJugador extends TestCase
 	{
 		String alias = "asd";
 		Jugador jugador = new Jugador( alias );
+		
+		assertEquals( new Integer( 0 ), jugador.getPuntos() );
+	}	
+	
+	public void testJugadorOtroJugadorAlias()
+	{
+		String alias = "asd";
+		Jugador jugador = new Jugador( new Jugador( alias ) );
+		
+		assertEquals(alias, jugador.getAlias() );
+	}	
+	
+	public void testJugadorOtroJugadorPuntos()
+	{
+		String alias = "asd";
+		Jugador jugador = new Jugador( new Jugador( alias ) );
 		
 		assertEquals( new Integer( 0 ), jugador.getPuntos() );
 	}	
