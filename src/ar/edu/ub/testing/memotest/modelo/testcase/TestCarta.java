@@ -61,4 +61,71 @@ public class TestCarta extends TestCase
 		assertEquals( dibujoCarta, carta.getDibujo());
 		assertEquals( dibujoLomo, carta.getDibujoLomo());
 	}	
+	
+	///////////////////////////////////////////////////////////////////////////
+	//Pruebas del metodo esIgualA
+	
+	public void testCartaEsIgualANull()
+	{
+		String dibujoCarta = "ABC";
+		Carta carta = new Carta( dibujoCarta );
+		
+		assertFalse( carta.esIgualA( null ) );
+	}		
+	
+	public void testCartaEsIgualASiMismo()
+	{
+		String dibujoCarta = "ABC";
+		Carta carta = new Carta( dibujoCarta );
+		
+		assertTrue( carta.esIgualA( carta ) );
+	}
+	
+	public void testCartaEsIgualAOtraCartaIgual()
+	{
+		String dibujoCarta = "ABC";
+		Carta carta = new Carta( dibujoCarta );
+		Carta carta2 = new Carta( dibujoCarta );
+		
+		assertTrue( carta.esIgualA( carta2 ) );
+	}
+	
+	public void testCartaEsIgualAUnaCartaDistina()
+	{
+		String dibujoCarta = "ABC";
+		String dibujoCarta2 = "ABCD";
+		
+		Carta carta = new Carta( dibujoCarta );
+		Carta carta2 = new Carta( dibujoCarta2 );
+		
+		assertFalse( carta.esIgualA( carta2 ) );
+	}		
+	
+	public void testCartaEsIgualAOtraCartaIgualConDistintoLomo()
+	{
+		String dibujoCarta = "ABC";
+		
+		String dibujoLomo = "F";
+		String dibujoLomo2 = "H";
+		
+		Carta carta = new Carta( dibujoCarta, dibujoLomo );
+		Carta carta2 = new Carta( dibujoCarta, dibujoLomo2 );
+		
+		assertTrue( carta.esIgualA( carta2 ) );
+	}	
+	
+	public void testCartaEsIgualAUnaCartaDistinaConDistintoLomo()
+	{
+		String dibujoCarta = "ABC";
+		String dibujoCarta2 = "ABCD";
+		
+		String dibujoLomo = "123";
+		String dibujoLomo2 = "bas";
+		
+		Carta carta = new Carta( dibujoCarta, dibujoLomo );
+		Carta carta2 = new Carta( dibujoCarta2, dibujoLomo2 );
+		
+		assertFalse( carta.esIgualA( carta2 ) );
+	}		
+		
 }
