@@ -1,5 +1,8 @@
 package ar.edu.ub.testing.memotest.consola.menu;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import ar.edu.ub.testing.memotest.consola.Consola;
 import ar.edu.ub.testing.memotest.consola.exception.ConsolaEsNullException;
 import ar.edu.ub.testing.memotest.consola.menu.exception.ConsolaMenuItemsInvalidosException;
@@ -146,10 +149,18 @@ public class ConsolaMenu
 		if( menuItem == null || menuItem.length == 0)
 			return false;
 		
+		Map<String, String> opcionesTeclado = new HashMap<String, String>();
+		
 		for( int posicion = 0; posicion < menuItem.length; posicion++)
-		{
+		{ 
 			if( menuItem[posicion] == null)
 				return false;
+			
+			//Si ya existe la opcion en la lista, salgo por error
+			if( opcionesTeclado.get( menuItem[posicion].getOpcionEnConsola() ) != null )
+				return false;
+			
+			opcionesTeclado.put( menuItem[posicion].getOpcionEnConsola(), menuItem[posicion].getOpcionEnConsola() ); 
 		}
 		
 		return true;
