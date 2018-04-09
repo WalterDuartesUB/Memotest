@@ -9,7 +9,7 @@ import ar.edu.ub.testing.memotest.modelo.interno.exception.MemotestCalculadorDeP
  * Historial
  * ---------
  * 2018/04/08	wduartes	calcular ahora da MemotestCalculadorDePuntosNoHayCartasException
- * 							si el parametro carta es null, tamanio cero, algun Carta no esta boca arriba
+ * 							si el parametro carta es null, tamaño cero, algun Carta no esta boca arriba
  * 							 o tiene un null dentro
  * 
  */
@@ -24,7 +24,7 @@ public class MemotestCalculadorDePuntos
 	 * @param cartas lista de Carta para saber cuantos puntos sumar
 	 * @return cantidad de puntos a suma
 	 * @exception MemotestCalculadorDePuntosNoHayCartasException si cartas es null,
-	 * 				cartas tiene tamanio cero, 
+	 * 				cartas tiene tamaño cero, 
 	 * 				si algun Carta no esta boca arriba,
 	 * 				o alguna Carta en cartas es null.
 	 */

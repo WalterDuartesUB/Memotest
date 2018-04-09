@@ -2,6 +2,8 @@ package ar.edu.ub.testing.memotest.consola.menu;
 
 import ar.edu.ub.testing.memotest.consola.Consola;
 import ar.edu.ub.testing.memotest.consola.exception.ConsolaEsNullException;
+import ar.edu.ub.testing.memotest.consola.menu.exception.ConsolaMenuItemsInvalidosException;
+import ar.edu.ub.testing.memotest.consola.menu.exception.ConsolaMenuTituloEsNullException;
 
 public class ConsolaMenu 
 {
@@ -12,17 +14,17 @@ public class ConsolaMenu
 	private boolean ignorarMayusculas;	
 	private Consola consola;
 	
-	private ConsolaMenu( Consola consola, String tituloMenu, ConsolaMenuItem[] MenuItem)
+	private ConsolaMenu( Consola consola, String tituloMenu, ConsolaMenuItem[] menuItem)
 	{
 		this.setConsola(consola);
 		this.setTituloMenu(tituloMenu);
-		this.setMenuItem(MenuItem);		
+		this.setMenuItem(menuItem);		
 		this.setIgnorarMayusculas( true );
 	}
 	
-	public static ConsolaMenuItem mostrarMenu( Consola consola, String tituloMenu, ConsolaMenuItem[] MenuItem)
+	public static ConsolaMenuItem mostrarMenu( Consola consola, String tituloMenu, ConsolaMenuItem[] menuItem)
 	{
-		ConsolaMenu menu = new ConsolaMenu( consola, tituloMenu, MenuItem );		
+		ConsolaMenu menu = new ConsolaMenu( consola, tituloMenu, menuItem );		
 		
 		return menu.mostrarMenu();
 	}
@@ -120,6 +122,9 @@ public class ConsolaMenu
 
 	private void setTituloMenu(String tituloMenu) 
 	{
+		if( tituloMenu == null )
+			throw new ConsolaMenuTituloEsNullException();
+		
 		this.tituloMenu = tituloMenu;
 	}
 
@@ -128,9 +133,26 @@ public class ConsolaMenu
 		return this.menuItem;
 	}
 
-	private void setMenuItem(ConsolaMenuItem[] MenuItem) 
+	private void setMenuItem(ConsolaMenuItem[] menuItem) 
 	{
-		this.menuItem = MenuItem;
+		if( !this.validarMenuItem( menuItem ) )
+			throw new ConsolaMenuItemsInvalidosException();
+		
+		this.menuItem = menuItem;
+	}
+
+	private boolean validarMenuItem(ConsolaMenuItem[] menuItem)
+	{
+		if( menuItem == null || menuItem.length == 0)
+			return false;
+		
+		for( int posicion = 0; posicion < menuItem.length; posicion++)
+		{
+			if( menuItem[posicion] == null)
+				return false;
+		}
+		
+		return true;
 	}
 
 	private ConsolaMenuItem getMenuItemElegido() 

@@ -7,7 +7,7 @@ public class ConsolaTecladoEmuladaNoHayInputsException extends ConsolaTecladoEmu
 
 	public ConsolaTecladoEmuladaNoHayInputsException()
 	{
-		super("La lista de inputs no puede ser null y tiene que tener tamanio mayor a 0");
+		super("La lista de inputs no puede ser null y tiene que tener tamaño mayor a 0");
 	}
 
 }
