@@ -114,11 +114,14 @@ public class ConsolaMenu
 
 	private void imprimirTitulo() 
 	{
-		this.getConsola().println( this.getTituloMenu() );
-		this.getConsola().println( String.format("%-" + new Integer( this.getTituloMenu().length( )).toString() + "s", " ").replace(" ", "-")  );
+		if( !this.getTituloMenu().isEmpty() )
+		{
+			this.getConsola().println( this.getTituloMenu() );
+			this.getConsola().println( String.format("%-" + new Integer( this.getTituloMenu().length( )).toString() + "s", " ").replace(" ", "-")  );
+		}
 	}
 
-	public String getTituloMenu() 
+	private String getTituloMenu() 
 	{
 		return tituloMenu;
 	}
@@ -131,7 +134,7 @@ public class ConsolaMenu
 		this.tituloMenu = tituloMenu;
 	}
 
-	public ConsolaMenuItem[] getMenuItems() 
+	private ConsolaMenuItem[] getMenuItems() 
 	{
 		return this.menuItem;
 	}
