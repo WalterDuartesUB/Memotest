@@ -1,5 +1,6 @@
 package ar.edu.ub.testing.memotest.consola;
 
+import ar.edu.ub.testing.memotest.consola.exception.ConsolaEsNullException;
 import ar.edu.ub.testing.memotest.consola.menu.ConsolaMenuDificultad;
 import ar.edu.ub.testing.memotest.consola.menu.ConsolaMenuFinJuego;
 import ar.edu.ub.testing.memotest.consola.menu.ConsolaMenuFinJuego.DecisionFinJuego;
@@ -320,6 +321,9 @@ public class MemotestConsola
 
 	private void setConsola(Consola consola)
 	{
+		if( consola == null )
+			throw new ConsolaEsNullException("No se puede asignar un Consola null a un MemotestConsola.");
+		
 		this.consola = consola;
 	}
 }

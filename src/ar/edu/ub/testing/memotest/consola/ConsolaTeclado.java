@@ -2,7 +2,7 @@ package ar.edu.ub.testing.memotest.consola;
 
 import java.util.Scanner;
 
-import ar.edu.ub.testing.memotest.consola.exception.ConsolaException;
+import ar.edu.ub.testing.memotest.consola.exception.ConsolaTecladoSoloPuedeHaberUnaInstanciaException;
 
 /**
  * Wrapper para tener centralizado las prestaciones de Scanner y evitar cerrar el System.in en medio del programa
@@ -27,7 +27,7 @@ public class ConsolaTeclado extends Consola
 	private void inicializar()
 	{
 		if( this.getIn() != null )
-			throw new ConsolaException();
+			throw new ConsolaTecladoSoloPuedeHaberUnaInstanciaException();
 			
 		this.setIn( new Scanner( System.in ) );
 	}

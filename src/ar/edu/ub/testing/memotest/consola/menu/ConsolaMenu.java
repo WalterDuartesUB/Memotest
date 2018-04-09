@@ -1,6 +1,7 @@
 package ar.edu.ub.testing.memotest.consola.menu;
 
 import ar.edu.ub.testing.memotest.consola.Consola;
+import ar.edu.ub.testing.memotest.consola.exception.ConsolaEsNullException;
 
 public class ConsolaMenu 
 {
@@ -156,7 +157,10 @@ public class ConsolaMenu
 	}
 
 	private void setConsola(Consola consola)
-	{
+	{		
+		if( consola == null )
+			throw new ConsolaEsNullException("No se puede asignar un Consola null a un ConsolaMenu.");
+		
 		this.consola = consola;
 	}
 	
