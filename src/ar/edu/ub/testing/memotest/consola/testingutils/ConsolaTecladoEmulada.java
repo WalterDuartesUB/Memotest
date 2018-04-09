@@ -11,11 +11,25 @@ public class ConsolaTecladoEmulada extends Consola
 	
 	public ConsolaTecladoEmulada( String[] inputsEmulados )
 	{
-		if( inputsEmulados == null || inputsEmulados.length == 0 )
+		if( !this.validarInputsEmulados ( inputsEmulados ) )
 			throw new ConsolaTecladoEmuladaNoHayInputsException();
 		
 		this.setInputsEmulados(inputsEmulados);
 		this.setPosicionInputEmulado( 0 );
+	}
+
+	private boolean validarInputsEmulados( String[] inputsEmulados )
+	{
+		if( inputsEmulados == null || inputsEmulados.length == 0 )
+			return false;
+		
+		for( int posicion = 0; posicion < inputsEmulados.length; posicion++ )
+		{
+			if( inputsEmulados[posicion] == null )
+				return false;
+		}
+		
+		return true;
 	}
 
 	@Override
