@@ -192,7 +192,9 @@ public class TestMemotest extends TestCase
 		assertEquals( jugadores.length, memotest.jugadoresOrdenadosPorPuntos().length );
 		assertTrue( memotest.esJugadorDeTurno( memotest.getJugadores()[0] ) );
 		
+		///////////////////////////////////////////////////////////////////////
 		//Veo que todas las cartas esten boca abajo
+		
 		for( int fila = 0; fila < memotest.getCantidadFilas(); fila++ )
 		{
 			for( int columna = 0; columna < memotest.getCantidadColumnas(); columna++ )
@@ -201,7 +203,15 @@ public class TestMemotest extends TestCase
 				assertFalse( memotest.estaLaCartaBocaArriba(fila, columna));
 				assertNotNull( memotest.getCarta(fila, columna));				
 			}
-		}			
+		}		
+		
+		///////////////////////////////////////////////////////////////////////
+		//Verifico que todos los jugadores sean los mismos
+		
+		Jugador[] jugadoresMemotest = memotest.getJugadores();
+		
+		for( int posicion = 0; posicion < jugadoresMemotest.length; posicion++ )
+			assertEquals(jugadores[posicion].getAlias(), jugadoresMemotest[posicion].getAlias() ); 
 	}
 	
 	public void testCrearDificultadFacil()
@@ -262,4 +272,340 @@ public class TestMemotest extends TestCase
 	{
 		verificarCambioJugadorTurno( new DificultadDificil() );	
 	}
+	
+	public void testEsJugadorTurnoNull()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		assertFalse( memotest.esJugadorDeTurno(null) );
+	}	
+	
+	public void testPedirCartaFilaInvalida()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		assertNull( memotest.getCarta(-1, 0) );
+	}
+	
+	public void testPedirCartaColumnaInvalida()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		assertNull( memotest.getCarta(0, -1) );
+	}
+	
+	public void testPedirCartaFilaInvalida2()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		assertNull( memotest.getCarta(memotest.getCantidadFilas() + 100 , 0) );
+	}
+	
+	public void testPedirCartaColumnaInvalida2()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		assertNull( memotest.getCarta(0, memotest.getCantidadColumnas() + 100 ) );
+	}
+	
+	
+	public void testEsCartaBocaArribaFilaInvalida()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		assertFalse( memotest.estaLaCartaBocaArriba(-1, 0) );
+	}
+	
+	public void testEsCartaBocaArribaColumnaInvalida()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		assertFalse( memotest.estaLaCartaBocaArriba(0, -1) );
+	}
+	
+	public void testEsCartaBocaArribaFilaInvalida2()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		assertFalse( memotest.estaLaCartaBocaArriba(memotest.getCantidadFilas() + 100 , 0) );
+	}
+	
+	public void testEsCartaBocaArribaColumnaInvalida2()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		assertFalse( memotest.estaLaCartaBocaArriba(0, memotest.getCantidadColumnas() + 100 ) );
+	}
+	
+	
+	public void testEsCartaBocaAbajoFilaInvalida()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		assertFalse( memotest.estaLaCartaBocaAbajo(-1, 0) );
+	}
+	
+	public void testEsCartaBocaAbajoColumnaInvalida()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		assertFalse( memotest.estaLaCartaBocaAbajo(0, -1) );
+	}
+	
+	public void testEsCartaBocaAbajoFilaInvalida2()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		assertFalse( memotest.estaLaCartaBocaAbajo(memotest.getCantidadFilas() + 100 , 0) );
+	}
+	
+	public void testEsCartaBocaAbajoColumnaInvalida2()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		assertFalse( memotest.estaLaCartaBocaAbajo(0, memotest.getCantidadColumnas() + 100 ) );
+	}
+	
+	public void testEsCartaBocaAbajo()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		assertTrue( memotest.estaLaCartaBocaAbajo(0, 0 ) );
+		assertFalse( memotest.estaLaCartaBocaArriba(0, 0 ) );
+	}
+	
+	public void testEsCartaBocaAbajo2()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		assertTrue( memotest.estaLaCartaBocaAbajo( memotest.getCantidadFilas() - 1, memotest.getCantidadColumnas() - 1 ) );
+		assertFalse( memotest.estaLaCartaBocaArriba( memotest.getCantidadFilas() - 1, memotest.getCantidadColumnas() - 1 ) );
+	}
+	
+	public void testEsCartaBocaArriba()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		
+		assertFalse( memotest.estaLaCartaBocaAbajo(0, 0 ) );
+		assertTrue( memotest.estaLaCartaBocaArriba(0, 0 ) );
+	}
+	
+	public void testEsCartaBocaArriba2()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		memotest.voltearCartaBocaArriba(memotest.getCantidadFilas() - 1, memotest.getCantidadColumnas() - 1);
+		
+		assertFalse( memotest.estaLaCartaBocaAbajo( memotest.getCantidadFilas() - 1, memotest.getCantidadColumnas() - 1 ) );
+		assertTrue( memotest.estaLaCartaBocaArriba( memotest.getCantidadFilas() - 1, memotest.getCantidadColumnas() - 1 ) );
+	}
+	
+	
+	public void testVoltearBocaArribaVariasVeces()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 0);
+		
+		assertFalse( memotest.estaLaCartaBocaAbajo(0, 0 ) );
+		assertTrue( memotest.estaLaCartaBocaArriba(0, 0 ) );
+	}	
+	
+	public void testVoltearBocaArribaVariasVeces2()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 0);
+		
+		assertFalse( memotest.estaLaCartaBocaAbajo(0, 0 ) );
+		assertTrue( memotest.estaLaCartaBocaArriba(0, 0 ) );
+	}	
+	
+	public void testElegiSuficientesCartasMismaCarta()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		assertFalse( memotest.elegiSuficientesCartas() );
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		
+		assertFalse( memotest.elegiSuficientesCartas() );
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		
+		assertFalse( memotest.elegiSuficientesCartas() );
+	}	
+	
+	public void testElegiSuficientesCartasDistintasCartas()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		assertFalse( memotest.elegiSuficientesCartas() );
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		
+		assertFalse( memotest.elegiSuficientesCartas() );
+		
+		memotest.voltearCartaBocaArriba( 0, 1);
+		
+		assertTrue( memotest.elegiSuficientesCartas() );
+	}	
+	
+	public void testElegiSuficientesCartasDistintasCartasSinSumarPuntos()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		assertFalse( memotest.elegiSuficientesCartas() );
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		
+		assertFalse( memotest.elegiSuficientesCartas() );
+		
+		memotest.voltearCartaBocaArriba( 0, 1);
+		
+		assertTrue( memotest.elegiSuficientesCartas() );
+		
+		memotest.voltearCartaBocaArriba( 0, 2);
+		
+		assertFalse( memotest.elegiSuficientesCartas() );
+	}	
 }
