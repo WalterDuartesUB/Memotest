@@ -605,11 +605,352 @@ public class TestMemotest extends TestCase
 		assertTrue( memotest.elegiSuficientesCartas() );
 		
 		memotest.voltearCartaBocaArriba( 0, 2);
-		
 
 		assertTrue( memotest.estaLaCartaBocaAbajo( 0, 2) );
 		assertFalse( memotest.estaLaCartaBocaArriba( 0, 2) );
 		assertTrue( memotest.elegiSuficientesCartas() );
 
 	}	
+	
+	public void verificarJugadoresOrdenadosPorPuntos(Jugador [] jugadores )
+	{
+		
+		boolean estanOrdenados = true;
+		Jugador jugadorAnterior = jugadores[0];
+		
+		for( int posicion = 1; posicion < jugadores.length && estanOrdenados; posicion++ )
+		{
+			assertTrue( jugadores[ posicion ].getPuntos() <= jugadorAnterior.getPuntos() );
+			jugadorAnterior = jugadores[posicion];
+		}
+	}
+	
+	public void testJugadoresOrdenados1()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+	
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 1);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		verificarJugadoresOrdenadosPorPuntos( memotest.jugadoresOrdenadosPorPuntos() );
+
+	}
+	
+	public void testJugadoresOrdenados2()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		memotest.cambiarJugadorDeTurno();
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 1);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		verificarJugadoresOrdenadosPorPuntos( memotest.jugadoresOrdenadosPorPuntos() );
+		
+	}
+	
+	public void testJugadoresPuntos1()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 1);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		//Verifico que las cartas ya no estan en el tablero
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 0) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 0) );
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 1) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 1) );		
+				
+		//Veo que sea el primer jugador el que esta primero en el ranking
+		assertEquals( jugadores[0].getAlias(), memotest.jugadoresOrdenadosPorPuntos()[0].getAlias() );
+		assertEquals( jugadores[1].getAlias(), memotest.jugadoresOrdenadosPorPuntos()[1].getAlias() );
+		
+		//Verifico los puntos
+		assertEquals( new Integer(3), memotest.jugadoresOrdenadosPorPuntos()[0].getPuntos() );
+		assertEquals( new Integer(0), memotest.jugadoresOrdenadosPorPuntos()[1].getPuntos() );
+		
+	}
+	
+	public void testJugadoresPuntos2()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		memotest.cambiarJugadorDeTurno();
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 1);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		//Verifico que las cartas ya no estan en el tablero
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 0) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 0) );
+		
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 1) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 1) );		
+		
+		//Veo que sea el segundo jugador el que esta primero en el ranking
+		assertEquals( jugadores[0].getAlias(), memotest.jugadoresOrdenadosPorPuntos()[1].getAlias() );
+		assertEquals( jugadores[1].getAlias(), memotest.jugadoresOrdenadosPorPuntos()[0].getAlias() );
+		
+		//Verifico los puntos
+		assertEquals( new Integer(3), memotest.jugadoresOrdenadosPorPuntos()[0].getPuntos() );
+		assertEquals( new Integer(0), memotest.jugadoresOrdenadosPorPuntos()[1].getPuntos() );
+		
+	}
+	
+	public void testJugadoresPuntos3()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 3);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 1);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		//Verifico que las cartas ya no estan en el tablero
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 0) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 0) );
+		
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 1) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 1) );		
+		
+		//Veo que sea el primer jugador el que esta primero en el ranking
+		assertEquals( jugadores[0].getAlias(), memotest.jugadoresOrdenadosPorPuntos()[0].getAlias() );
+		assertEquals( jugadores[1].getAlias(), memotest.jugadoresOrdenadosPorPuntos()[1].getAlias() );
+		
+		//Verifico los puntos
+		assertEquals( new Integer(1), memotest.jugadoresOrdenadosPorPuntos()[0].getPuntos() );
+		assertEquals( new Integer(0), memotest.jugadoresOrdenadosPorPuntos()[1].getPuntos() );
+		
+	}
+	
+	public void testJugadoresPuntos4()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		memotest.cambiarJugadorDeTurno();
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 3);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 1);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		//Verifico que las cartas ya no estan en el tablero
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 0) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 0) );
+		
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 1) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 1) );		
+		
+		//Veo que sea el segundo jugador el que esta primero en el ranking
+		assertEquals( jugadores[0].getAlias(), memotest.jugadoresOrdenadosPorPuntos()[1].getAlias() );
+		assertEquals( jugadores[1].getAlias(), memotest.jugadoresOrdenadosPorPuntos()[0].getAlias() );
+		
+		//Verifico los puntos
+		assertEquals( new Integer(1), memotest.jugadoresOrdenadosPorPuntos()[0].getPuntos() );
+		assertEquals( new Integer(0), memotest.jugadoresOrdenadosPorPuntos()[1].getPuntos() );
+		
+	}
+	
+	
+	public void testJugadoresPuntos5()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 3);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		memotest.voltearCartaBocaArriba( 0, 1);
+		memotest.voltearCartaBocaArriba( 0, 4);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 1);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		//Verifico que las cartas ya no estan en el tablero
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 0) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 0) );
+		
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 1) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 1) );
+		
+		//Veo que sea el primer jugador el que esta primero en el ranking
+		assertEquals( jugadores[0].getAlias(), memotest.jugadoresOrdenadosPorPuntos()[0].getAlias() );
+		assertEquals( jugadores[1].getAlias(), memotest.jugadoresOrdenadosPorPuntos()[1].getAlias() );
+		
+		//Verifico los puntos
+		assertEquals( new Integer(1), memotest.jugadoresOrdenadosPorPuntos()[0].getPuntos() );
+		assertEquals( new Integer(0), memotest.jugadoresOrdenadosPorPuntos()[1].getPuntos() );
+		
+	}
+	
+	public void testJugadoresPuntos6()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		memotest.cambiarJugadorDeTurno();
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 3);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		memotest.voltearCartaBocaArriba( 0, 1);
+		memotest.voltearCartaBocaArriba( 0, 4);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 1);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		//Verifico que las cartas ya no estan en el tablero
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 0) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 0) );
+		
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 1) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 1) );		
+		
+		//Veo que sea el segundo jugador el que esta primero en el ranking
+		assertEquals( jugadores[0].getAlias(), memotest.jugadoresOrdenadosPorPuntos()[1].getAlias() );
+		assertEquals( jugadores[1].getAlias(), memotest.jugadoresOrdenadosPorPuntos()[0].getAlias() );
+		
+		//Verifico los puntos
+		assertEquals( new Integer(1), memotest.jugadoresOrdenadosPorPuntos()[0].getPuntos() );
+		assertEquals( new Integer(0), memotest.jugadoresOrdenadosPorPuntos()[1].getPuntos() );
+		
+	}
+	
+	public void testJugadoresSinPuntos1()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 3);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		//Verifico que las cartas esten boca abajo
+		assertTrue( memotest.estaLaCartaBocaAbajo( 0, 0) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 3) );		
+		
+		
+		//Veo que sea el primer jugador el que esta primero en el ranking
+		assertEquals( jugadores[0].getAlias(), memotest.jugadoresOrdenadosPorPuntos()[0].getAlias() );
+		assertEquals( jugadores[1].getAlias(), memotest.jugadoresOrdenadosPorPuntos()[1].getAlias() );
+		
+		//Verifico los puntos
+		assertEquals( new Integer(0), memotest.jugadoresOrdenadosPorPuntos()[0].getPuntos() );
+		assertEquals( new Integer(0), memotest.jugadoresOrdenadosPorPuntos()[1].getPuntos() );
+		
+	}
+	
+	public void testJugadoresSinPuntos2()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		memotest.cambiarJugadorDeTurno();
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 4);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		//Verifico que las cartas esten boca abajo
+		assertTrue( memotest.estaLaCartaBocaAbajo( 0, 0) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 3) );		
+		
+		//Veo que sea el primer jugador el que esta primero en el ranking
+		assertEquals( jugadores[0].getAlias(), memotest.jugadoresOrdenadosPorPuntos()[0].getAlias() );
+		assertEquals( jugadores[1].getAlias(), memotest.jugadoresOrdenadosPorPuntos()[1].getAlias() );
+		
+		//Verifico los puntos
+		assertEquals( new Integer(0), memotest.jugadoresOrdenadosPorPuntos()[0].getPuntos() );
+		assertEquals( new Integer(0), memotest.jugadoresOrdenadosPorPuntos()[1].getPuntos() );
+		
+	}
 }
