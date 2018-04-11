@@ -16,6 +16,9 @@ public class ArrayUtils
 	 * ---------
 	 * 
 	 * 2018/04/07	wduartes	Si el array es null, retorna null
+	 * 2018/04/10	wduartes	Me aseguro que el array mezclado 
+	 * 							en mezclar tenga elementos en 
+	 * 							orden diferente al array original
 	 * 
 	 */
 	public static Object[] mezclar(Object[] array) 
@@ -28,14 +31,51 @@ public class ArrayUtils
 		Random   rand = new Random();
 		Object[] arrayMezclado = array.clone();
 		
-	    for (int i = arrayMezclado.length - 1; i > 0; i--) 
-	    {
-	    	intercambiar(arrayMezclado, i, rand.nextInt(i + 1));
-	    }		
-	     	    	
+		if( ArrayUtils.sePuedeMezclar( array ) )
+		{
+			do
+			{
+			    for (int i = arrayMezclado.length - 1; i > 0; i--) 
+			    {
+			    	intercambiar(arrayMezclado, i, rand.nextInt(i + 1));
+			    }		
+			}
+			while( !ArrayUtils.tienenAlgunElementoDiferente( array, arrayMezclado ) );
+		}
+		
 		return arrayMezclado;
 	}
 	
+	private static boolean sePuedeMezclar(Object[] array)
+	{
+		//Si es un array de un solo elemento, no debo mezclarlo
+		if( array.length < 2)
+			return false;
+		
+		//Si todos los elementos son iguales, no debo mezclarlo
+		boolean hayAlgunElementoDiferente = false;
+		
+		for( int posicion = 0; posicion < array.length - 1 && !hayAlgunElementoDiferente; posicion++ )
+		{
+			hayAlgunElementoDiferente = ( array[posicion] != array[posicion+1] );
+		}
+		
+		return hayAlgunElementoDiferente;
+	}
+
+	private static boolean tienenAlgunElementoDiferente(Object[] array, Object[] arrayMezclado)
+	{
+		//Si tiene tamaño 1, son diferentes
+		if( array.length == 1 )
+			return true;
+		
+		for( int posicion = 0; posicion < array.length; posicion++ )
+			if( array[posicion] != arrayMezclado[posicion])
+				return true;
+		
+		return false;
+	}
+
 	/**
 	 * Intercambia dos posiciones de la lista de Object
 	 * @param cartas lista de Object en donde intercambiar los Object

@@ -8,6 +8,12 @@ import junit.framework.TestCase;
 
 public class TestArrayUtils extends TestCase 
 {
+	/**
+	 * Historial
+	 * ---------
+	 * 2018/04/10	wduartes	Aparece un metodo para testear que luego de mezclar
+	 * 							al menos un elemento del array esta en otra posicion 
+	 */
 	
 	///////////////////////////////////////////////////////////////////////////
 	//Pruebas de arrays con null
@@ -141,4 +147,33 @@ public class TestArrayUtils extends TestCase
 			assertTrue( mapaValores.get( arrayMezclado[posicion] ) >= 0 );			
 		}
 	}	
+	
+	public void testMezclarEstaMezclado()
+	{		
+		String[] array = new String[] { "a", "b", "c" };
+		String[] arrayMezclado = (String[]) ArrayUtils.mezclar( array );
+		
+		boolean estaMezclado = false;
+		for( int posicion = 0; posicion < array.length && !estaMezclado; posicion++ )
+		{
+			estaMezclado = ( array[posicion] != arrayMezclado[posicion] );
+		}
+		
+		assertTrue( estaMezclado );
+	}	
+	
+	public void testMezclarQuedaIgualSiTodoRepetido()
+	{		
+		String[] array = new String[] { "a", "a", "a" };
+		String[] arrayMezclado = (String[]) ArrayUtils.mezclar( array );
+		
+		boolean estaMezclado = false;
+		for( int posicion = 0; posicion < array.length && !estaMezclado; posicion++ )
+		{
+			estaMezclado = ( array[posicion] != arrayMezclado[posicion] );
+		}
+		
+		assertFalse( estaMezclado );
+	}	
+		
 }
