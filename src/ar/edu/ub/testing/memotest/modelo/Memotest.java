@@ -9,6 +9,7 @@ import ar.edu.ub.testing.memotest.modelo.exception.MemotestSinDificultadExceptio
 import ar.edu.ub.testing.memotest.modelo.exception.MemotestSinJugadoresException;
 import ar.edu.ub.testing.memotest.modelo.interno.MemotestCalculadorDePuntos;
 import ar.edu.ub.testing.memotest.modelo.interno.MemotestCarta;
+import ar.edu.ub.testing.memotest.modelo.interno.MemotestCreadorTablero;
 import ar.edu.ub.testing.memotest.modelo.interno.MemotestJugador;
 import ar.edu.ub.testing.memotest.modelo.interno.MemotestTablero;
 import ar.edu.ub.testing.memotest.modelo.interno.OrdenarJugadorPorPuntos;
@@ -34,7 +35,7 @@ public class Memotest
 	private List<MemotestCarta>        	cartasBocaArriba;
 	private MemotestCalculadorDePuntos  calculadorDePuntos;
 	
-	private void inicializarJuego(Dificultad dificultad, Jugador[] jugadores) 
+	private void inicializarJuego(Dificultad dificultad, Jugador[] jugadores, MemotestCreadorTablero creadorDeTableros) 
 	{		
 		
 		if( dificultad == null )
@@ -46,8 +47,8 @@ public class Memotest
 		this.inicializarJugadores( jugadores );
 	
 		this.setJugadorDeTurno( this.getMemotestPrimerJugador() );
-				
-		this.inicializarTablero(dificultad);
+	
+		this.setTablero( creadorDeTableros.crearTablero( dificultad, Memotest.CANTIDAD_CARTAS_NECESARIAS_POR_TURNO ) );		
 		
 		this.setCalculadorDePuntos(new MemotestCalculadorDePuntos() );
 				
@@ -91,42 +92,6 @@ public class Memotest
 	private MemotestJugador getMemotestPrimerJugador() 
 	{
 		return this.getMemotestJugadores()[0];
-	}
-	
-	private void inicializarTablero( Dificultad dificultad ) 
-	{		
-		this.setTablero( new MemotestTablero( dificultad.getCantidadFilas(), dificultad.getCantidadColumnas() ) );
-		
-		Carta[] cartas =  Carta.mezclar( this.crearCartas( Memotest.CANTIDAD_CARTAS_NECESARIAS_POR_TURNO ) );
-	
-		//Coloco las cartas que cree en el tablero
-		for( int posicion = 0; posicion < cartas.length; posicion++ )
-			tablero.ponerCarta(posicion / this.getCantidadColumnas(), posicion % this.getCantidadColumnas(), cartas[posicion] );		
-	}
-	
-	/**
-	 * Crea una cantidad de cartas con determinada cantidad de repeticiones
-	 * @param cantidadTotalDeCartas cantidad de cartas totales a crear
-	 * @param cantidadRepeticiones cantidad de repeticiones de los dibujos de las cartas en la lista
-	 * @return una lista de MemotestCarta con repeticiones de dibujos
-	 */
-	
-	private Carta[] crearCartas( Integer cantidadRepeticiones ) 
-	{
-		int     cantidadTotalDeCartas = this.getCantidadFilas() * this.getCantidadColumnas();
-		Carta[] cartas = new Carta[ cantidadTotalDeCartas ];
-		String  dibujo  = "";
-				
-		for( int posicion = 0; posicion < cantidadTotalDeCartas; posicion++ )
-		{
-			//Creo un dibujo nuevo cada vez que consigo la cantidad de repeticiones que necesito para el tablero
-			if( ( posicion % cantidadRepeticiones  ) == 0 )
-				dibujo = String.format( "%c%c", 65 + posicion / this.getCantidadColumnas(), 65 + posicion % this.getCantidadColumnas() );			
-				
-			cartas[posicion] = new Carta( new String( dibujo ) ); 
-		}
-		
-		return cartas;
 	}
 
 	private void vaciarListaCartasBocaArriba() 
@@ -291,11 +256,11 @@ public class Memotest
 		this.cartasBocaArriba = listaDeCartasBocaArriba;
 	}
 	
-	public static Memotest crearMemotest(Dificultad dificultad, Jugador[] jugadores) 
+	public static Memotest crearMemotest(Dificultad dificultad, Jugador[] jugadores, MemotestCreadorTablero creadorDeTablero) 
 	{
 		Memotest memotest = new Memotest();
 		
-		memotest.inicializarJuego(dificultad, jugadores);
+		memotest.inicializarJuego(dificultad, jugadores, creadorDeTablero );
 		
 		return memotest;
 	}

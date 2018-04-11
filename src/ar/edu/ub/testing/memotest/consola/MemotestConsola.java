@@ -12,6 +12,8 @@ import ar.edu.ub.testing.memotest.modelo.dificultad.Dificultad;
 import ar.edu.ub.testing.memotest.modelo.dificultad.DificultadDificil;
 import ar.edu.ub.testing.memotest.modelo.dificultad.DificultadFacil;
 import ar.edu.ub.testing.memotest.modelo.dificultad.DificultadMedia;
+import ar.edu.ub.testing.memotest.modelo.interno.MemotestCreadorTablero;
+import ar.edu.ub.testing.memotest.modelo.interno.MemotestCreadorTableroMezclado;
 import ar.edu.ub.testing.utils.StringUtils;
 
 /**
@@ -28,12 +30,18 @@ public class MemotestConsola
 	 */
 	private Integer filaSeleccionada;	
 	private Consola consola;
+	private MemotestCreadorTablero creadorDeTablero;
 	
 	public MemotestConsola( Consola consola )
 	{
-		this.setConsola(consola);
+		this( consola, new MemotestCreadorTableroMezclado() );
 	}
-	
+		
+	public MemotestConsola( Consola consola, MemotestCreadorTablero creadorDeTablero )
+	{
+		this.setConsola(consola);
+		this.setCreadorDeTablero(creadorDeTablero);
+	}	
 	/**
 	 * Metodo para jugar al memotest por consola
 	 * Al terminar una partida, pregunta al usuario si desea:
@@ -64,7 +72,7 @@ public class MemotestConsola
 	
 	private void jugarPartida( Dificultad dificultad, Jugador[] jugadores)
 	{
-		Memotest           memotest = Memotest.crearMemotest( dificultad, jugadores );
+		Memotest           memotest = Memotest.crearMemotest( dificultad, jugadores, this.getCreadorDeTablero() );
 		 
 		this.quitarSeleccionFila();
 		
@@ -325,5 +333,16 @@ public class MemotestConsola
 			throw new ConsolaEsNullException("No se puede asignar un Consola null a un MemotestConsola.");
 		
 		this.consola = consola;
+	}
+
+	private MemotestCreadorTablero getCreadorDeTablero()
+	{
+		return creadorDeTablero;
+	}
+
+
+	private void setCreadorDeTablero(MemotestCreadorTablero creadorDeTablero)
+	{
+		this.creadorDeTablero = creadorDeTablero;
 	}
 }
