@@ -50,7 +50,7 @@ public abstract class MemotestCreadorTablero
 
 	private boolean validarDificultad(Dificultad dificultad, Integer cantidadCopiasCartas)
 	{
-		if( cantidadCopiasCartas == null || cantidadCopiasCartas == 0)
+		if( cantidadCopiasCartas == null || cantidadCopiasCartas <= 0)
 			return false;
 		
 		return ( ( dificultad.getCantidadColumnas() * dificultad.getCantidadFilas() ) % cantidadCopiasCartas ) == 0;
@@ -61,7 +61,7 @@ public abstract class MemotestCreadorTablero
 		if( dificultad == null)
 			return false;
 		
-		return dificultad.getCantidadColumnas() <= 0 || dificultad.getCantidadFilas() <= 0;
+		return !( ( dificultad.getCantidadColumnas() <= 0 ) || ( dificultad.getCantidadFilas() <= 0 ) );
 	}
 	
 }

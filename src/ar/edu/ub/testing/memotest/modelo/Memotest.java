@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import ar.edu.ub.testing.memotest.modelo.dificultad.Dificultad;
+import ar.edu.ub.testing.memotest.modelo.exception.MemotestSinCreadorDeTableroException;
 import ar.edu.ub.testing.memotest.modelo.exception.MemotestSinDificultadException;
 import ar.edu.ub.testing.memotest.modelo.exception.MemotestSinJugadoresException;
 import ar.edu.ub.testing.memotest.modelo.interno.MemotestCalculadorDePuntos;
@@ -44,6 +45,9 @@ public class Memotest
 		if( !this.validarHayJugadores( jugadores ) )
 			throw new MemotestSinJugadoresException();
 		
+		if( creadorDeTableros == null )
+			throw new MemotestSinCreadorDeTableroException();
+		
 		this.inicializarJugadores( jugadores );
 	
 		this.setJugadorDeTurno( this.getMemotestPrimerJugador() );
@@ -57,7 +61,7 @@ public class Memotest
 	
 	private boolean validarHayJugadores(Jugador[] jugadores)
 	{
-		if( jugadores == null || jugadores.length == 0 )
+		if( jugadores == null || jugadores.length <= 1 )
 			return false;
 		
 		for( int posicion = 0; posicion < jugadores.length; posicion++ )
