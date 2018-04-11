@@ -111,7 +111,7 @@ public class MemotestConsola
 		this.getConsola().nextLine();		
 	}
 
-	private void mostrarJugadoresOrdenadosPorPuntos(Memotest memotest) 
+	protected void mostrarJugadoresOrdenadosPorPuntos(Memotest memotest) 
 	{
 		Jugador[] jugadoresPorRanking = memotest.jugadoresOrdenadosPorPuntos( );
 	
