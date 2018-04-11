@@ -952,5 +952,113 @@ public class TestMemotest extends TestCase
 		assertEquals( new Integer(0), memotest.jugadoresOrdenadosPorPuntos()[0].getPuntos() );
 		assertEquals( new Integer(0), memotest.jugadoresOrdenadosPorPuntos()[1].getPuntos() );
 		
-	}
+	}	
+	
+	public void testJugadoresNoSePuedeVoltearCartaQuitada1()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 1);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		//Verifico que las cartas ya no estan en el tablero
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 0) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 0) );
+		
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 1) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 1) );		
+
+		//Trato de voltear la misma carta
+		memotest.voltearCartaBocaArriba( 0, 0);
+
+		//Verifico que siguen sin aparecer en el tablero
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 0) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 0) );		
+		
+	}	
+	
+	public void testJugadoresNoSePuedeVoltearCartaQuitada2()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 3);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 1);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		//Verifico que las cartas ya no estan en el tablero
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 0) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 0) );
+		
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 1) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 1) );		
+		
+		//Trato de voltear la misma carta
+		memotest.voltearCartaBocaArriba( 0, 0);
+		
+		//Verifico que siguen sin aparecer en el tablero
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 0) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 0) );		
+		
+	}	
+	
+	public void testJugadoresNoSePuedeVoltearCartaQuitada3()
+	{
+		Dificultad dificultad = new DificultadFacil();
+		Jugador[]  jugadores = new Jugador[] { new Jugador("J1"), new Jugador("J2") };
+		MemotestCreadorTablero creadorTablero = new MemotestCreadorTableroNoMezclado();
+		
+		//
+		
+		Memotest memotest = Memotest.crearMemotest(dificultad, jugadores, creadorTablero);
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 3);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		memotest.voltearCartaBocaArriba( 0, 4);
+		memotest.voltearCartaBocaArriba( 0, 1);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		memotest.voltearCartaBocaArriba( 0, 0);
+		memotest.voltearCartaBocaArriba( 0, 1);
+		
+		memotest.sumarPuntosAlJugadorDeTurno();
+		
+		//Verifico que las cartas ya no estan en el tablero
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 0) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 0) );
+		
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 1) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 1) );		
+		
+		//Trato de voltear la misma carta
+		memotest.voltearCartaBocaArriba( 0, 0);
+		
+		//Verifico que siguen sin aparecer en el tablero
+		assertFalse( memotest.estaLaCartaBocaAbajo( 0, 0) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 0) );		
+		
+	}	
 }
