@@ -606,6 +606,8 @@ public class TestMemotest extends TestCase
 		
 		memotest.voltearCartaBocaArriba( 0, 2);
 		
-		assertFalse( memotest.elegiSuficientesCartas() );
+		assertTrue( memotest.estaLaCartaBocaAbajo( 0, 2) );
+		assertFalse( memotest.estaLaCartaBocaArriba( 0, 2) );
+		assertTrue( memotest.elegiSuficientesCartas() );
 	}	
 }

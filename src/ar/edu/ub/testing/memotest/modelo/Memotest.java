@@ -198,7 +198,7 @@ public class Memotest
 	public void voltearCartaBocaArriba(Integer fila, Integer columna) 
 	{
 		
-		if( this.validarFilaColumna( fila, columna ) && this.esCartaBocaAbajo( fila, columna ) )
+		if( this.validarFilaColumna( fila, columna ) && this.esCartaBocaAbajo( fila, columna ) && !this.elegiSuficientesCartas() )
 		{
 			this.getMemotestCarta( fila, columna).voltearBocaArriba();		
 			this.agregarCartaBocaArriba( this.getMemotestCarta( fila, columna) );
