@@ -2,6 +2,8 @@ package ar.edu.ub.testing.memotest.modelo.interno;
 
 import ar.edu.ub.testing.memotest.modelo.Carta;
 import ar.edu.ub.testing.memotest.modelo.dificultad.Dificultad;
+import ar.edu.ub.testing.memotest.modelo.interno.exception.MemotestCreadorTableroDificultadCantidadDeCopiasInvalidasException;
+import ar.edu.ub.testing.memotest.modelo.interno.exception.MemotestCreadorTableroDificultadInvalidaException;
 
 public abstract class MemotestCreadorTablero
 {
@@ -26,7 +28,12 @@ public abstract class MemotestCreadorTablero
 	 * @return un MemotestTablero con Carta listo para jugar
 	 */
 	public MemotestTablero crearTablero(Dificultad dificultad, Integer cantidadCopiasCartas)
-	{
+	{		
+		if( !this.validarDificultad( dificultad ) )
+			throw new MemotestCreadorTableroDificultadInvalidaException();
+		
+		if( !this.validarDificultad( dificultad, cantidadCopiasCartas ) )
+			throw new MemotestCreadorTableroDificultadCantidadDeCopiasInvalidasException();
 		
 		MemotestTablero tablero = new MemotestTablero( dificultad.getCantidadFilas(), dificultad.getCantidadColumnas() );
 		
@@ -39,6 +46,22 @@ public abstract class MemotestCreadorTablero
 			tablero.ponerCarta(posicion / dificultad.getCantidadColumnas(), posicion % dificultad.getCantidadColumnas(), cartas[posicion] );
 		
 		return tablero;	
+	}
+
+	private boolean validarDificultad(Dificultad dificultad, Integer cantidadCopiasCartas)
+	{
+		if( cantidadCopiasCartas == null || cantidadCopiasCartas == 0)
+			return false;
+		
+		return ( ( dificultad.getCantidadColumnas() * dificultad.getCantidadFilas() ) % cantidadCopiasCartas ) == 0;
+	}
+
+	private boolean validarDificultad(Dificultad dificultad)
+	{
+		if( dificultad == null)
+			return false;
+		
+		return dificultad.getCantidadColumnas() <= 0 || dificultad.getCantidadFilas() <= 0;
 	}
 	
 }
