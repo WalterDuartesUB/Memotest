@@ -5,8 +5,8 @@ public class StringUtils
 {
 	
 	public static boolean isEmpty(final CharSequence cs) 
-	{
-		 return cs == null || cs.length() == 0;
+	{		
+		return cs == null || cs.toString().trim().length() == 0;
 	}
 	
 	/** Determina si una cadena de caracteres contiene digitos

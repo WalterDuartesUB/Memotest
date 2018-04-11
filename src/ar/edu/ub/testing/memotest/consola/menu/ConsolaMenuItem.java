@@ -1,5 +1,9 @@
 package ar.edu.ub.testing.memotest.consola.menu;
 
+import ar.edu.ub.testing.memotest.consola.menu.exception.ConsolaMenuItemDescripcionInvalidaException;
+import ar.edu.ub.testing.memotest.consola.menu.exception.ConsolaMenuItemOpcionEnConsolaInvalidaException;
+import ar.edu.ub.testing.utils.StringUtils;
+
 public class ConsolaMenuItem 
 {
 	private String descripcion; 
@@ -18,6 +22,9 @@ public class ConsolaMenuItem
 	}
 	private void setOpcionEnConsola(String opcionEnConsola) 
 	{
+		if( StringUtils.isEmpty(opcionEnConsola) )
+			throw new ConsolaMenuItemOpcionEnConsolaInvalidaException();
+		
 		this.opcionEnConsola = opcionEnConsola;
 	}
 	public Object getItemData() 
@@ -34,6 +41,9 @@ public class ConsolaMenuItem
 	}
 	private void setDescripcion(String descripcion) 
 	{
+		if( StringUtils.isEmpty(descripcion) )
+			throw new ConsolaMenuItemDescripcionInvalidaException();
+		
 		this.descripcion = descripcion;
 	}
 	public boolean esLaOpcion(String opcionElegidaPorUsuario, boolean ignorarMayusculas) 
